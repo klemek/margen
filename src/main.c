@@ -18,5 +18,6 @@ int main()
         free(data_line);
     }
     free(data);
+    fclose(fptr);
     return 0;
 }
