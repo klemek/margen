@@ -1,3 +1,4 @@
+#include "bmp.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -70,7 +71,7 @@ char *bmp_data_line(unsigned long width, unsigned int color_depth, char *data) {
 
 void bmp_generate(unsigned long width, unsigned long height,
                   unsigned int color_depth, char *file_path,
-                  void generate_line(unsigned long y, char *data_buffer)) {
+                  line_fn generate_line) {
   FILE *fptr;
   fptr = fopen(file_path, "w");
   char *header = bmp_header(width, height, color_depth);
