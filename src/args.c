@@ -44,12 +44,10 @@ void invalid_value(char *arg, char *subarg, char *value) {
   print_help(1);
 }
 
-bool is_arg(char *arg, char *ref) {
-  return strncmp(arg, ref, strlen(ref)) == 0;
-}
+bool is_arg(char *arg, char *ref) { return strcoll(arg, ref) == 0; }
 
-char *get_arg_value(char *arg) {
-  strtok(arg, "="); // remove first part
+char *split_arg_value(char *arg) {
+  strtok(arg, "=");
   return strtok(NULL, "=");
 }
 
@@ -69,7 +67,14 @@ bool is_number(char *value) {
   return value;
 }
 
-void parse_number(char *arg, char *value, unsigned char color[3]) {
+long parse_number(char *arg, char *value) {
+  if (!is_number(value)) {
+    invalid_value(arg, NULL, value);
+  }
+  return atol(value);
+}
+
+void parse_color(char *arg, char *value, unsigned char color[3]) {
   char *tmp;
   tmp = strtok(value, ",");
   if (!is_number(tmp)) {
@@ -109,43 +114,25 @@ parameters parse_args(int argc, char **argv) {
   char *value;
   for (i = 1; i < argc; i++) {
     arg = argv[i];
+    value = split_arg_value(arg);
     if (is_arg(arg, "--help")) {
       print_help(0);
     } else if (is_arg(arg, "-q") || is_arg(arg, "--quiet")) {
       params.quiet = true;
     } else if (is_arg(arg, "-w") || is_arg(arg, "--width")) {
-      value = get_arg_value(arg);
-      if (!is_number(value)) {
-        invalid_value(arg, NULL, value);
-      }
-      params.width = (unsigned long)atol(value);
+      params.width = (unsigned long)parse_number(arg, value);
     } else if (is_arg(arg, "-h") || is_arg(arg, "--height")) {
-      value = get_arg_value(arg);
-      if (!is_number(value)) {
-        invalid_value(arg, NULL, value);
-      }
-      params.height = (unsigned long)atol(value);
+      params.height = (unsigned long)parse_number(arg, value);
     } else if (is_arg(arg, "-o") || is_arg(arg, "--output")) {
-      value = get_arg_value(arg);
       params.file_path = value;
     } else if (is_arg(arg, "-p") || is_arg(arg, "--pixel")) {
-      value = get_arg_value(arg);
-      if (!is_number(value)) {
-        invalid_value(arg, NULL, value);
-      }
-      params.size = (unsigned char)atoi(value);
+      params.size = (unsigned char)parse_number(arg, value);
     } else if (is_arg(arg, "-s") || is_arg(arg, "--slope")) {
-      value = get_arg_value(arg);
-      if (!is_number(value)) {
-        invalid_value(arg, NULL, value);
-      }
-      params.size = (unsigned char)atoi(value);
+      params.size = (unsigned char)parse_number(arg, value);
     } else if (is_arg(arg, "-c") || is_arg(arg, "--color")) {
-      value = get_arg_value(arg);
-      parse_number(arg, value, params.start);
+      parse_color(arg, value, params.start);
     } else if (is_arg(arg, "-v") || is_arg(arg, "--variation")) {
-      value = get_arg_value(arg);
-      parse_number(arg, value, params.start);
+      parse_color(arg, value, params.start);
     } else {
       invalid_arg(arg);
     }
