@@ -10,7 +10,7 @@ void generate_line(unsigned long y, char *data_buffer) {
   memset(data_buffer, y, WIDTH * COLOR_DEPTH);
 }
 
-int main() {
+int main(int argc, char **argv) {
   bmp_generate(WIDTH, HEIGHT, COLOR_DEPTH, "test.bmp", generate_line);
   return 0;
 }
