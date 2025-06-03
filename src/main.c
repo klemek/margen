@@ -1,23 +1,16 @@
-#include "main.h"
+#include <string.h>
 
-int main()
-{
-    FILE *fptr;
-    fptr = fopen("test.bmp", "w");
-    char *header = bmp_header(WIDTH, HEIGHT, COLOR_DEPTH);
-    fwrite(header, HEADER_SIZE, 1, fptr);
-    free(header);
-    int y;
-    char *data = malloc(WIDTH * COLOR_DEPTH);
-    char *data_line = NULL;
-    for (y = 0; y < HEIGHT; y++)
-    {
-        memset(data, HEIGHT - y - 1, WIDTH * COLOR_DEPTH);
-        data_line = bmp_data_line(WIDTH, COLOR_DEPTH, data, 0);
-        fwrite(data_line, bmp_data_line_length(WIDTH, COLOR_DEPTH), 1, fptr);
-        free(data_line);
-    }
-    free(data);
-    fclose(fptr);
-    return 0;
+#include "bmp.h"
+
+#define WIDTH 256
+#define HEIGHT 256
+#define COLOR_DEPTH 3
+
+void generate_line(unsigned long y, char *data_buffer) {
+  memset(data_buffer, y, WIDTH * COLOR_DEPTH);
+}
+
+int main() {
+  bmp_generate(WIDTH, HEIGHT, COLOR_DEPTH, "test.bmp", generate_line);
+  return 0;
 }

@@ -1,5 +1,3 @@
-rootdir = $(realpath .)
-
 .PHONY: build
 clean:
 	rm -rf build
@@ -7,5 +5,5 @@ clean:
 build:
 	mkdir -p build && \
 		cd build && \
-		gcc -Wall -c $(rootdir)/src/*.c && \
+		gcc -Wall -c ../src/*.c && \
 		gcc -Wall -o mg *.o
