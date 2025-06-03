@@ -10,8 +10,9 @@ void generate_line(unsigned long y, char *data_buffer) {
   memset(data_buffer, y, global_params.width * COLOR_DEPTH);
 }
 
-void generate(parameters params) {
+int generate(parameters params) {
   global_params = params;
   bmp_generate(params.width, params.height, COLOR_DEPTH, params.file_path,
                generate_line);
+  return 0;
 }
