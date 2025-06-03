@@ -3,7 +3,5 @@ clean:
 	rm -rf build
 
 build:
-	mkdir -p build && \
-		cd build && \
-		gcc -Wall -c ../src/*.c && \
-		gcc -Wall -o mg *.o
+	mkdir -p build
+	gcc -Wall src/*.c src/*.h -o build/mg
