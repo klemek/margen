@@ -4,7 +4,7 @@
 
 #define COLOR_DEPTH 3
 
-parameters global_params = EMPTY_PARAMS;
+parameters global_params;
 
 void generate_line(unsigned long y, char *data_buffer) {
   memset(data_buffer, y, global_params.width * COLOR_DEPTH);

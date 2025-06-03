@@ -18,7 +18,4 @@ typedef struct Parameters parameters;
 
 parameters parse_args(int argc, char **argv);
 
-const parameters EMPTY_PARAMS = {
-    0, 0, NULL, 0, 0.0, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}};
-
 #endif
