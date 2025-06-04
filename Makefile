@@ -23,7 +23,7 @@ time: build
 valgrind: build
 	valgrind --leak-check=full -s ./build/$(TARGET) $(TEST_ARGS)
 
-.PHONY:
+.PHONY: release
 release: clean build time
 	@echo -n "Version (x.y.z): "
 	@read VERSION; \
@@ -32,4 +32,3 @@ release: clean build time
 		git commit -m "$(TARGET) v$$VERSION"; \
 		git tag v$$VERSION -m "$(TARGET) v$$VERSION"
 	@echo updated ./src/const.h and tagged version
-	
