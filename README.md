@@ -40,6 +40,8 @@ options:
 
 ## TODO
 
-- monochrome
+- fix monochrome
 - select corner (currently bottom left)
 - better starting parameters for convergeance
+- add range arg for variation
+- add timer
