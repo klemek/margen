@@ -35,7 +35,6 @@ options:
   -s, --slope        slope [0-255] (default: random)
   -c, --color        base color [0-255,0-255,0-255] (default: random)
   -v, --variation    base variation [0-255,0-255,0-255] (default: random)
-  -m, --monochrome   black & white generation
 ```
 
 ## TODO

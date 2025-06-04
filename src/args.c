@@ -35,7 +35,8 @@ void print_help(int status_code) {
        "  -c, --color        base color [0-255,0-255,0-255] (default: random)\n"
        "  -v, --variation    base variation [0-255,0-255,0-255] (default: "
        "random)\n"
-       "  -m, --monochrome   black & white generation");
+       //  "  -m, --monochrome   black & white generation"
+  );
   exit(status_code);
 }
 
@@ -174,8 +175,8 @@ parameters parse_args(int argc, char **argv) {
     } else if (is_arg(arg, "-v") || is_arg(arg, "--variation")) {
       parse_color(arg, value, params.var);
       var_set = true;
-    } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
-      params.monochrome = true;
+      // } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
+      //   params.monochrome = true;
     } else {
       invalid_arg(arg);
     }
