@@ -189,7 +189,7 @@ parameters parse_args(int argc, char **argv) {
   set_seed(params.seed);
 
   if (!size_set) {
-    params.size = rand_ushort(10) + 3;
+    params.size = rand_ushort(6) + 6;
   }
 
   if (!slope_set) {
@@ -203,9 +203,9 @@ parameters parse_args(int argc, char **argv) {
   }
 
   if (!var_set) {
-    params.var[0] = rand_uchar(20);
-    params.var[1] = rand_uchar(20);
-    params.var[2] = rand_uchar(20);
+    params.var[0] = rand_uchar(30);
+    params.var[1] = rand_uchar(30);
+    params.var[2] = rand_uchar(30);
   }
 
   return params;
