@@ -7,7 +7,9 @@
 #include <time.h>
 
 void print_help(int status_code) {
-  puts("usage: " NAME " "
+  puts(NAME
+       " " VERSION "\n\n"
+       "usage: " NAME " "
        "[--help] "
        "[-v] "
        "[-q] "
