@@ -1,6 +1,6 @@
 TARGET ?= margen
 INSTALL_DIR ?= $(HOME)/.local/bin
-TEST_ARGS ?= -w=100
+TEST_ARGS ?=
 SHELL := /bin/bash
 
 .PHONY: build

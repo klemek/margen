@@ -40,13 +40,8 @@ void invalid_arg(char *arg) {
   print_help(1);
 }
 
-void invalid_value(char *arg, char *subarg, char *value) {
-  if (subarg == NULL) {
-    fprintf(stderr, "invalid value for argument '%s': '%s'\n\n", arg, value);
-  } else {
-    fprintf(stderr, "invalid value for argument '%s' %s: '%s'\n\n", arg, subarg,
-            value);
-  }
+void invalid_value(char *arg, char *value) {
+  fprintf(stderr, "invalid value for argument '%s': '%s'\n\n", arg, value);
   print_help(1);
 }
 
@@ -59,7 +54,7 @@ char *split_arg_value(char *arg) {
 
 bool is_digit(char c) { return c >= '0' && c <= '9'; }
 
-bool is_number(char *value, char *max) {
+bool is_number(char *value) {
   if (value == NULL) {
     return false;
   }
@@ -70,26 +65,34 @@ bool is_number(char *value, char *max) {
       return false;
     }
   }
-  return strcmp(value, max) <= 0;
+  return true;
 }
 
 unsigned char parse_char(char *arg, char *value) {
-  if (!is_number(value, "255")) {
-    invalid_value(arg, NULL, value);
+  if (!is_number(value)) {
+    invalid_value(arg, value);
   }
-  return (char)atoi(value);
+  unsigned long long tmp_value = (unsigned long long)atoll(value);
+  if (tmp_value >= 256) {
+    invalid_value(arg, value);
+  }
+  return (unsigned char)tmp_value;
 }
 
 unsigned short parse_ushort(char *arg, char *value) {
-  if (!is_number(value, "65535")) {
-    invalid_value(arg, NULL, value);
+  if (!is_number(value)) {
+    invalid_value(arg, value);
   }
-  return (unsigned short)atoi(value);
+  unsigned long long tmp_value = (unsigned long long)atoll(value);
+  if (tmp_value >= 65536) {
+    invalid_value(arg, value);
+  }
+  return (unsigned short)tmp_value;
 }
 
 unsigned short parse_ulong(char *arg, char *value) {
-  if (!is_number(value, "18446744073709551615")) {
-    invalid_value(arg, NULL, value);
+  if (!is_number(value)) {
+    invalid_value(arg, value);
   }
   return (unsigned long)atoll(value);
 }
@@ -97,20 +100,11 @@ unsigned short parse_ulong(char *arg, char *value) {
 void parse_color(char *arg, char *value, unsigned char color[3]) {
   char *tmp;
   tmp = strtok(value, ",");
-  if (!is_number(tmp, "255")) {
-    invalid_value(arg, "(R)", tmp);
-  }
-  color[0] = (char)atoi(tmp);
+  color[0] = parse_char(arg, tmp);
   tmp = strtok(NULL, ",");
-  if (!is_number(tmp, "255")) {
-    invalid_value(arg, "(G)", tmp);
-  }
-  color[1] = (char)atoi(tmp);
+  color[1] = parse_char(arg, tmp);
   tmp = strtok(NULL, ",");
-  if (!is_number(tmp, "255")) {
-    invalid_value(arg, "(B)", tmp);
-  }
-  color[2] = (char)atoi(tmp);
+  color[2] = parse_char(arg, tmp);
 }
 
 parameters parse_args(int argc, char **argv) {
@@ -141,7 +135,7 @@ parameters parse_args(int argc, char **argv) {
     } else if (is_arg(arg, "-w") || is_arg(arg, "--width")) {
       params.width = parse_ushort(arg, value);
       if (params.width == 0) {
-        invalid_value(arg, NULL, value);
+        invalid_value(arg, value);
       }
       if (params.height == 0) {
         params.height = params.width;
@@ -149,7 +143,7 @@ parameters parse_args(int argc, char **argv) {
     } else if (is_arg(arg, "-h") || is_arg(arg, "--height")) {
       params.height = parse_ushort(arg, value);
       if (params.height == 0) {
-        invalid_value(arg, NULL, value);
+        invalid_value(arg, value);
       }
       if (params.width == 0) {
         params.width = params.height;
@@ -161,7 +155,7 @@ parameters parse_args(int argc, char **argv) {
     } else if (is_arg(arg, "-p") || is_arg(arg, "--pixel")) {
       params.size = parse_ushort(arg, value);
       if (params.size == 0) {
-        invalid_value(arg, NULL, value);
+        invalid_value(arg, value);
       }
       size_set = true;
     } else if (is_arg(arg, "-s") || is_arg(arg, "--slope")) {
@@ -202,9 +196,9 @@ parameters parse_args(int argc, char **argv) {
   }
 
   if (!var_set) {
-    params.var[0] = rand_uchar(30);
-    params.var[1] = rand_uchar(30);
-    params.var[2] = rand_uchar(30);
+    params.var[0] = rand_uchar(20);
+    params.var[1] = rand_uchar(20);
+    params.var[2] = rand_uchar(20);
   }
 
   return params;
