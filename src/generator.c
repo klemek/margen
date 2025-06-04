@@ -1,17 +1,29 @@
 #include "args.h"
 #include "bmp.h"
+#include "rand.h"
+#include <math.h>
 #include <stdio.h>
 
 #define COLOR_DEPTH 3
 
 parameters global_params;
+float global_fslope;
 
 void generate_line(unsigned short y, unsigned char *data_buffer,
                    unsigned int len) {
   unsigned int i;
   for (i = 0; i < len; i++) {
-    data_buffer[i] = global_params.start[i % 3];
+    data_buffer[i] = rand_uchar(256);
   }
+}
+
+unsigned char pixel_gen(unsigned char depth, unsigned char top_pixel,
+                        unsigned char left_pixel) {
+  float v = fminf(
+      255.0, fmaxf(0.0, (rand_float(2.0) - 1.0) * global_params.var[depth] +
+                            ((float)left_pixel) * global_fslope +
+                            ((float)top_pixel) * (1.0 - global_fslope)));
+  return (unsigned char)v;
 }
 
 void debug_parameters(parameters params) {
@@ -29,7 +41,9 @@ void debug_parameters(parameters params) {
 
 int generate(parameters params) {
   global_params = params;
+  global_fslope = ((float)params.slope) / 255.0;
   debug_parameters(params);
+  set_seed(params.seed);
   bmp_generate(params.width, params.height, COLOR_DEPTH, params.file_path,
                generate_line);
   return 0;
