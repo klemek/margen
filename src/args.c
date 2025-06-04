@@ -1,4 +1,5 @@
 #include "args.h"
+#include "const.h"
 #include "rand.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,8 +7,9 @@
 #include <time.h>
 
 void print_help(int status_code) {
-  puts("usage: margen "
+  puts("usage: " NAME " "
        "[--help] "
+       "[-v] "
        "[-q] "
        "[-w=WIDTH] "
        "[-h=HEIGHT] "
@@ -16,7 +18,7 @@ void print_help(int status_code) {
        "[-p=PIXEL_SIZE] "
        "[-s=SLOPE] "
        "[-c=R,G,B] "
-       "[-v=R,G,B] "
+       "[--var=R,G,B] "
        "[-m]\n\n"
        "generates a marble-like pattern bitmap image.\n\n"
        "options:\n"
@@ -132,6 +134,9 @@ parameters parse_args(int argc, char **argv) {
       print_help(0);
     } else if (is_arg(arg, "-q") || is_arg(arg, "--quiet")) {
       params.quiet = true;
+    } else if (is_arg(arg, "-v") || is_arg(arg, "--version")) {
+      puts(NAME " " VERSION);
+      exit(0);
     } else if (is_arg(arg, "-w") || is_arg(arg, "--width")) {
       params.width = parse_ushort(arg, value);
       if (params.width == 0) {

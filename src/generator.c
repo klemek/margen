@@ -1,5 +1,6 @@
 #include "args.h"
 #include "bmp.h"
+#include "const.h"
 #include "rand.h"
 #include <math.h>
 #include <stdio.h>
@@ -52,18 +53,19 @@ void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
 
 void debug_parameters(parameters params) {
   if (!params.quiet) {
-    printf("output  %s\n", params.file_path);
-    printf("seed    %ld\n", params.seed);
-    printf("width   %d\n", params.width);
-    printf("height  %d\n", params.height);
-    printf("pixel   %d\n", params.size);
+    printf("  output  %s\n", params.file_path);
+    printf("  seed    %ld\n", params.seed);
+    printf("  width   %d\n", params.width);
+    printf("  height  %d\n", params.height);
+    printf("  pixel   %d\n", params.size);
     if (params.monochrome) {
-      printf("color   %u\n", params.start[0]);
-      printf("var.    %u\n", params.var[0]);
+      printf("  color   %u\n", params.start[0]);
+      printf("  var.    %u\n", params.var[0]);
     } else {
-      printf("color   %u,%u,%u\n", params.start[0], params.start[1],
+      printf("  color   %u,%u,%u\n", params.start[0], params.start[1],
              params.start[2]);
-      printf("var.    %u,%u,%u\n", params.var[0], params.var[1], params.var[2]);
+      printf("  var.    %u,%u,%u\n", params.var[0], params.var[1],
+             params.var[2]);
     }
   }
 }
@@ -90,6 +92,9 @@ void clean() {
 }
 
 void generate(parameters params) {
+  if (!params.quiet) {
+    puts(NAME " " VERSION);
+  }
   init(params);
   bmp_generate(params.width, params.height, color_depth, params.file_path,
                generate_bmp_line);
