@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 parameters global_params;
 float slope;
@@ -91,12 +92,21 @@ void clean() {
   free(current_line);
 }
 
+void print_time(parameters params, clock_t start) {
+  if (!params.quiet) {
+    clock_t now = clock();
+    printf("time: %.3fs\n", (float)(now - start) / CLOCKS_PER_SEC);
+  }
+}
+
 void generate(parameters params) {
   if (!params.quiet) {
     puts(NAME " " VERSION);
   }
+  clock_t start = clock();
   init(params);
   bmp_generate(params.width, params.height, color_depth, params.file_path,
                generate_bmp_line);
   clean();
+  print_time(params, start);
 }
