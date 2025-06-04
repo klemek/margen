@@ -21,7 +21,9 @@ void print_help(int status_code) {
        "[-s=SLOPE] "
        "[-c=R,G,B] "
        "[--var=R,G,B] "
-       "[-m]\n\n"
+       "[-vr=VAR_RANGE]"
+       //  "[-m]"
+       "\n\n"
        "generate a marble-like pattern bitmap image, blazing fast.\n\n"
        "options:\n"
        "  --help             show this help message and exit\n"
@@ -33,9 +35,11 @@ void print_help(int status_code) {
        "  -p, --pixel        pixel size (default: random)\n"
        "  -s, --slope        slope [0-255] (default: random)\n"
        "  -c, --color        base color [0-255,0-255,0-255] (default: random)\n"
-       "  -v, --variation    base variation [0-255,0-255,0-255] (default: "
+       "  -va, --variation   fixed variation [0-255,0-255,0-255] (default: "
        "random)\n"
-       "  -m, --monochrome   black & white generation");
+       "  -vr, --var-range   random variation range [0-255] (default: 30)\n"
+       //  "  -m, --monochrome   black & white generation\n"
+  );
   exit(status_code);
 }
 
@@ -121,6 +125,8 @@ parameters parse_args(int argc, char **argv) {
   params.file_path = "output.bmp";
   params.monochrome = false;
 
+  unsigned char var_range = 30;
+
   bool size_set = false;
   bool slope_set = false;
   bool start_set = false;
@@ -171,11 +177,13 @@ parameters parse_args(int argc, char **argv) {
     } else if (is_arg(arg, "-c") || is_arg(arg, "--color")) {
       parse_color(arg, value, params.start);
       start_set = true;
-    } else if (is_arg(arg, "-v") || is_arg(arg, "--variation")) {
+    } else if (is_arg(arg, "-va") || is_arg(arg, "--variation")) {
       parse_color(arg, value, params.var);
       var_set = true;
-    } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
-      params.monochrome = true;
+    } else if (is_arg(arg, "-vr") || is_arg(arg, "--var-range")) {
+      var_range = parse_char(arg, value);
+      // } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
+      //   params.monochrome = true;
     } else {
       invalid_arg(arg);
     }
@@ -203,9 +211,9 @@ parameters parse_args(int argc, char **argv) {
   }
 
   if (!var_set) {
-    params.var[0] = rand_uchar(30);
-    params.var[1] = rand_uchar(30);
-    params.var[2] = rand_uchar(30);
+    params.var[0] = rand_uchar(var_range);
+    params.var[1] = rand_uchar(var_range);
+    params.var[2] = rand_uchar(var_range);
   }
 
   return params;
