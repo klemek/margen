@@ -68,6 +68,7 @@ void debug_parameters(parameters params) {
       printf("  var.    %u,%u,%u\n", params.var[0], params.var[1],
              params.var[2]);
     }
+    printf("  rot.    %d\n", params.rotation);
   }
 }
 
@@ -104,8 +105,8 @@ void generate(parameters params) {
   }
   clock_t start = clock();
   init(params);
-  bmp_generate(params.width, params.height, color_depth, false,
-               params.file_path, generate_bmp_line);
+  bmp_generate(params.width, params.height, color_depth,
+               params.rotation % 2 == 1, params.file_path, generate_bmp_line);
   clean();
   print_time(params, start);
 }
