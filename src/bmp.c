@@ -85,8 +85,9 @@ void bmp_generate(unsigned short width, unsigned short height,
   unsigned int data_length =
       ((unsigned int)width) * ((unsigned int)color_depth);
   unsigned short y;
-  unsigned char *data_buffer = malloc(data_length);
-  unsigned char *line_buffer = malloc(bmp_data_line_length(width, color_depth));
+  unsigned char *data_buffer = (unsigned char *)malloc(data_length);
+  unsigned char *line_buffer =
+      (unsigned char *)malloc(bmp_data_line_length(width, color_depth));
   for (y = 0; y < height; y++) {
     generate_line(height - y - 1, data_buffer, data_length);
     bmp_data_line(line_buffer, width, color_depth, data_buffer);
