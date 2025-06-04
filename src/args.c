@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-void print_help(int status_code) {
-  puts("usage: mg "
+void print_help(int status_code)
+{
+  puts("usage: margen "
        "[--help] "
        "[-q] "
        "[-w=WIDTH] "
@@ -29,15 +30,20 @@ void print_help(int status_code) {
   exit(status_code);
 }
 
-void invalid_arg(char *arg) {
+void invalid_arg(char *arg)
+{
   fprintf(stderr, "invalid argument: '%s'\n\n", arg);
   print_help(1);
 }
 
-void invalid_value(char *arg, char *subarg, char *value) {
-  if (subarg == NULL) {
+void invalid_value(char *arg, char *subarg, char *value)
+{
+  if (subarg == NULL)
+  {
     fprintf(stderr, "invalid value for argument '%s': '%s'\n\n", arg, value);
-  } else {
+  }
+  else
+  {
     fprintf(stderr, "invalid value for argument '%s' %s: '%s'\n\n", arg, subarg,
             value);
   }
@@ -46,54 +52,66 @@ void invalid_value(char *arg, char *subarg, char *value) {
 
 bool is_arg(char *arg, char *ref) { return strcoll(arg, ref) == 0; }
 
-char *split_arg_value(char *arg) {
+char *split_arg_value(char *arg)
+{
   strtok(arg, "=");
   return strtok(NULL, "=");
 }
 
 bool is_digit(char c) { return c >= '0' && c <= '9'; }
 
-bool is_number(char *value) {
-  if (value == NULL) {
+bool is_number(char *value)
+{
+  if (value == NULL)
+  {
     return false;
   }
   unsigned long value_len = strlen(value);
   int i;
-  for (i = 0; i < value_len; i++) {
-    if (!is_digit(value[i])) {
+  for (i = 0; i < value_len; i++)
+  {
+    if (!is_digit(value[i]))
+    {
       return false;
     }
   }
   return value;
 }
 
-long parse_number(char *arg, char *value) {
-  if (!is_number(value)) {
+long parse_number(char *arg, char *value)
+{
+  if (!is_number(value))
+  {
     invalid_value(arg, NULL, value);
   }
   return atol(value);
 }
 
-void parse_color(char *arg, char *value, unsigned char color[3]) {
+void parse_color(char *arg, char *value, unsigned char color[3])
+{
   char *tmp;
   tmp = strtok(value, ",");
-  if (!is_number(tmp)) {
+  if (!is_number(tmp))
+  {
     invalid_value(arg, "(R)", tmp);
   }
   color[0] = (unsigned char)atoi(tmp);
   tmp = strtok(NULL, ",");
-  if (!is_number(tmp)) {
+  if (!is_number(tmp))
+  {
     invalid_value(arg, "(G)", tmp);
   }
   color[1] = (unsigned char)atoi(tmp);
   tmp = strtok(NULL, ",");
-  if (!is_number(tmp)) {
+  if (!is_number(tmp))
+  {
     invalid_value(arg, "(B)", tmp);
   }
   color[2] = (unsigned char)atoi(tmp);
 }
 
-parameters parse_args(int argc, char **argv) {
+parameters parse_args(int argc, char **argv)
+{
   parameters params;
 
   params.quiet = false;
@@ -112,28 +130,48 @@ parameters parse_args(int argc, char **argv) {
   int i;
   char *arg;
   char *value;
-  for (i = 1; i < argc; i++) {
+  for (i = 1; i < argc; i++)
+  {
     arg = argv[i];
     value = split_arg_value(arg);
-    if (is_arg(arg, "--help")) {
+    if (is_arg(arg, "--help"))
+    {
       print_help(0);
-    } else if (is_arg(arg, "-q") || is_arg(arg, "--quiet")) {
+    }
+    else if (is_arg(arg, "-q") || is_arg(arg, "--quiet"))
+    {
       params.quiet = true;
-    } else if (is_arg(arg, "-w") || is_arg(arg, "--width")) {
+    }
+    else if (is_arg(arg, "-w") || is_arg(arg, "--width"))
+    {
       params.width = (unsigned long)parse_number(arg, value);
-    } else if (is_arg(arg, "-h") || is_arg(arg, "--height")) {
+    }
+    else if (is_arg(arg, "-h") || is_arg(arg, "--height"))
+    {
       params.height = (unsigned long)parse_number(arg, value);
-    } else if (is_arg(arg, "-o") || is_arg(arg, "--output")) {
+    }
+    else if (is_arg(arg, "-o") || is_arg(arg, "--output"))
+    {
       params.file_path = value;
-    } else if (is_arg(arg, "-p") || is_arg(arg, "--pixel")) {
+    }
+    else if (is_arg(arg, "-p") || is_arg(arg, "--pixel"))
+    {
       params.size = (unsigned char)parse_number(arg, value);
-    } else if (is_arg(arg, "-s") || is_arg(arg, "--slope")) {
+    }
+    else if (is_arg(arg, "-s") || is_arg(arg, "--slope"))
+    {
       params.size = (unsigned char)parse_number(arg, value);
-    } else if (is_arg(arg, "-c") || is_arg(arg, "--color")) {
+    }
+    else if (is_arg(arg, "-c") || is_arg(arg, "--color"))
+    {
       parse_color(arg, value, params.start);
-    } else if (is_arg(arg, "-v") || is_arg(arg, "--variation")) {
+    }
+    else if (is_arg(arg, "-v") || is_arg(arg, "--variation"))
+    {
       parse_color(arg, value, params.start);
-    } else {
+    }
+    else
+    {
       invalid_arg(arg);
     }
   }

@@ -1,13 +1,24 @@
-TARGET=mg
+TARGET ?= margen
+INSTALL_DIR ?= $(HOME)/.local/bin
+TEST_ARGS ?= -w=100 -h=100
+SHELL := /bin/bash
 
 .PHONY: build
 clean:
-	rm -rf build
+	@rm -rf build
 
 build:
-	mkdir -p build
+	@mkdir -p build
 	gcc -Wall src/*.c src/*.h -o build/$(TARGET)
 
-.PHONY: leak-test
-leak-test: clean build
-	valgrind --leak-check=full -s ./build/$(TARGET)
+.PHONY: install
+install: build
+	cp -f build/$(TARGET) $(INSTALL_DIR)/$(TARGET)
+
+.PHONY: time
+time: build
+	time ./build/$(TARGET) $(TEST_ARGS)
+
+.PHONY: valgrind
+valgrind: build
+	valgrind --leak-check=full -s ./build/$(TARGET) $(TEST_ARGS)
