@@ -16,7 +16,8 @@ void print_help(int status_code) {
        "[-p=PIXEL_SIZE] "
        "[-s=SLOPE] "
        "[-c=R,G,B] "
-       "[-v=R,G,B]\n\n"
+       "[-v=R,G,B] "
+       "[-m]\n\n"
        "generates a marble-like pattern bitmap image.\n\n"
        "options:\n"
        "  --help             show this help message and exit\n"
@@ -29,7 +30,8 @@ void print_help(int status_code) {
        "  -s, --slope        slope [0-255] (default: random)\n"
        "  -c, --color        base color [0-255,0-255,0-255] (default: random)\n"
        "  -v, --variation    base variation [0-255,0-255,0-255] (default: "
-       "random)");
+       "random)"
+       "  -m, --monochrome   black & white generation");
   exit(status_code);
 }
 
@@ -119,6 +121,7 @@ parameters parse_args(int argc, char **argv) {
   params.width = 0;
   params.height = 0;
   params.file_path = "output.bmp";
+  params.monochrome = false;
 
   bool size_set = false;
   bool slope_set = false;
@@ -170,6 +173,8 @@ parameters parse_args(int argc, char **argv) {
     } else if (is_arg(arg, "-v") || is_arg(arg, "--variation")) {
       parse_color(arg, value, params.var);
       var_set = true;
+    } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
+      params.monochrome = true;
     } else {
       invalid_arg(arg);
     }

@@ -5,6 +5,7 @@
 
 struct Parameters {
   bool quiet;
+  bool monochrome;
   unsigned long seed;
   unsigned short width;
   unsigned short height;
