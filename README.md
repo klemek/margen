@@ -1,6 +1,6 @@
 # margen
 
-> Marble-like pattern generator, blazing fast
+> generate a marble-like pattern bitmap image, blazing fast.
 
 ![](./images/sample1.bmp)
 
@@ -22,7 +22,7 @@ make clean build install
 ```txt
 usage: margen [--help] [-q] [-w=WIDTH] [-h=HEIGHT] [-o=PATH] [--seed=SEED][-p=PIXEL_SIZE] [-s=SLOPE] [-c=R,G,B] [-v=R,G,B] [-m]
 
-generates a marble-like pattern bitmap image.
+generate a marble-like pattern bitmap image, blazing fast.
 
 options:
   --help             show this help message and exit

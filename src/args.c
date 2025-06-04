@@ -22,7 +22,7 @@ void print_help(int status_code) {
        "[-c=R,G,B] "
        "[--var=R,G,B] "
        "[-m]\n\n"
-       "generates a marble-like pattern bitmap image.\n\n"
+       "generate a marble-like pattern bitmap image, blazing fast.\n\n"
        "options:\n"
        "  --help             show this help message and exit\n"
        "  -q, --quiet        do not print to console\n"
