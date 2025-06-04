@@ -30,7 +30,7 @@ void print_help(int status_code) {
        "  -s, --slope        slope [0-255] (default: random)\n"
        "  -c, --color        base color [0-255,0-255,0-255] (default: random)\n"
        "  -v, --variation    base variation [0-255,0-255,0-255] (default: "
-       "random)"
+       "random)\n"
        "  -m, --monochrome   black & white generation");
   exit(status_code);
 }
