@@ -75,7 +75,7 @@ void bmp_data_line(unsigned char *buffer, unsigned short width,
 }
 
 void bmp_generate(unsigned short width, unsigned short height,
-                  unsigned char color_depth, char *file_path,
+                  unsigned char color_depth, bool descending, char *file_path,
                   line_fn generate_line) {
   FILE *fptr;
   fptr = fopen(file_path, "w");
@@ -84,14 +84,17 @@ void bmp_generate(unsigned short width, unsigned short height,
   free(header);
   unsigned int data_length =
       ((unsigned int)width) * ((unsigned int)color_depth);
-  unsigned short y;
+  unsigned int line_length = bmp_data_line_length(width, color_depth);
   unsigned char *data_buffer = (unsigned char *)malloc(data_length);
-  unsigned char *line_buffer =
-      (unsigned char *)malloc(bmp_data_line_length(width, color_depth));
+  unsigned char *line_buffer = (unsigned char *)malloc(line_length);
+  unsigned short y;
   for (y = 0; y < height; y++) {
-    generate_line(height - y - 1, data_buffer, data_length);
+    generate_line(y, data_buffer, data_length);
     bmp_data_line(line_buffer, width, color_depth, data_buffer);
-    fwrite(line_buffer, bmp_data_line_length(width, color_depth), 1, fptr);
+    if (descending) {
+      fseek(fptr, HEADER_SIZE + (height - y - 1) * line_length, SEEK_SET);
+    }
+    fwrite(line_buffer, line_length, 1, fptr);
   }
   free(line_buffer);
   free(data_buffer);
