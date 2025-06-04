@@ -4,32 +4,35 @@
 
 #define HEADER_SIZE 54
 
-void write_str(char *buffer, int offset, int size, char *value) {
+void write_str(unsigned char *buffer, unsigned short offset,
+               unsigned short size, unsigned char *value) {
   int i;
   for (i = 0; i < size; i++) {
-    buffer[offset + i] = value[i];
+    buffer[offset + i] = (unsigned char)value[i];
   }
 }
 
-void write_num(char *buffer, int offset, int size, unsigned long value) {
+void write_num(unsigned char *buffer, unsigned short offset,
+               unsigned short size, unsigned short value) {
   int i;
   for (i = 0; i < size; i++) {
-    buffer[offset + i] = (char)((value >> (8 * i)) & 0xFFu);
+    buffer[offset + i] = (unsigned char)((value >> (8 * i)) & 0xFFu);
   }
 }
 
-void write_nul(char *buffer, int offset, int size) {
+void write_nul(unsigned char *buffer, unsigned short offset,
+               unsigned short size) {
   int i;
   for (i = 0; i < size; i++) {
     buffer[offset + i] = 0;
   }
 }
 
-char *bmp_header(unsigned long width, unsigned long height,
-                 unsigned int color_depth) {
-  char *output = (char *)malloc(HEADER_SIZE);
+unsigned char *bmp_header(unsigned short width, unsigned short height,
+                          unsigned char color_depth) {
+  unsigned char *output = (unsigned char *)malloc(HEADER_SIZE);
 
-  write_str(output, 0x00, 0x02, "BM"); // 0x00(2) BM
+  write_str(output, 0x00, 0x02, (unsigned char *)"BM"); // 0x00(2) BM
   write_num(output, 0x02, 0x04,
             HEADER_SIZE + width * height * color_depth); // 0x02(4) file size
   write_nul(output, 0x06, 0x04);              // 0x06(4) application reserved
@@ -50,34 +53,34 @@ char *bmp_header(unsigned long width, unsigned long height,
   return output;
 }
 
-unsigned long bmp_data_line_length(unsigned long width,
-                                   unsigned int color_depth) {
-  unsigned long line_offset = (width * color_depth) % 4;
-  unsigned long line_padding = line_offset > 0 ? 4 - line_offset : 0;
+unsigned short bmp_data_line_length(unsigned short width,
+                                    unsigned char color_depth) {
+  unsigned short line_offset = (width * color_depth) % 4;
+  unsigned short line_padding = line_offset > 0 ? 4 - line_offset : 0;
   return width * color_depth + line_padding;
 }
 
-void bmp_data_line(char *buffer, unsigned long width, unsigned int color_depth,
-                   char *data) {
-  unsigned long line_offset = (width * color_depth) % 4;
-  unsigned long line_padding = line_offset > 0 ? 4 - line_offset : 0;
+void bmp_data_line(unsigned char *buffer, unsigned short width,
+                   unsigned char color_depth, unsigned char *data) {
+  unsigned short line_offset = (width * color_depth) % 4;
+  unsigned short line_padding = line_offset > 0 ? 4 - line_offset : 0;
   write_str(buffer, 0, width * color_depth, data);
   if (line_padding > 0) {
     write_nul(buffer, width * color_depth, line_padding);
   }
 }
 
-void bmp_generate(unsigned long width, unsigned long height,
-                  unsigned int color_depth, char *file_path,
+void bmp_generate(unsigned short width, unsigned short height,
+                  unsigned char color_depth, char *file_path,
                   line_fn generate_line) {
   FILE *fptr;
   fptr = fopen(file_path, "w");
-  char *header = bmp_header(width, height, color_depth);
+  unsigned char *header = bmp_header(width, height, color_depth);
   fwrite(header, HEADER_SIZE, 1, fptr);
   free(header);
-  int y;
-  char *data_buffer = malloc(width * color_depth);
-  char *line_buffer = malloc(bmp_data_line_length(width, color_depth));
+  unsigned short y;
+  unsigned char *data_buffer = malloc(width * color_depth);
+  unsigned char *line_buffer = malloc(bmp_data_line_length(width, color_depth));
   for (y = 0; y < height; y++) {
     generate_line(height - y - 1, data_buffer);
     bmp_data_line(line_buffer, width, color_depth, data_buffer);

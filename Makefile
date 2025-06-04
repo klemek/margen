@@ -1,6 +1,6 @@
 TARGET ?= margen
 INSTALL_DIR ?= $(HOME)/.local/bin
-TEST_ARGS ?= -w=100 -h=100
+TEST_ARGS ?= -w=100
 SHELL := /bin/bash
 
 .PHONY: build
@@ -9,7 +9,7 @@ clean:
 
 build:
 	@mkdir -p build
-	gcc -Wall src/*.c src/*.h -o build/$(TARGET)
+	gcc -Wall src/*.c src/*.h -lm -o build/$(TARGET)
 
 .PHONY: install
 install: build

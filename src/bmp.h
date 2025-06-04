@@ -3,8 +3,8 @@
 #ifndef BMP_H
 #define BMP_H
 
-void bmp_generate(unsigned long width, unsigned long height,
-                  unsigned int color_depth, char *file_path,
+void bmp_generate(unsigned short width, unsigned short height,
+                  unsigned char color_depth, char *file_path,
                   line_fn generate_line);
 
 #endif

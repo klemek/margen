@@ -5,10 +5,11 @@
 
 struct Parameters {
   bool quiet;
-  unsigned long width;
-  unsigned long height;
+  unsigned long seed;
+  unsigned short width;
+  unsigned short height;
   char *file_path;
-  unsigned char size;
+  unsigned short size;
   unsigned char slope;
   unsigned char start[3];
   unsigned char var[3];
@@ -16,6 +17,6 @@ struct Parameters {
 
 typedef struct Parameters parameters;
 
-typedef void line_fn(unsigned long y, char *data_buffer);
+typedef void line_fn(unsigned short y, unsigned char *data_buffer);
 
 #endif
