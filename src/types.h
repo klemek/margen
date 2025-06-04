@@ -17,6 +17,7 @@ struct Parameters {
 
 typedef struct Parameters parameters;
 
-typedef void line_fn(unsigned short y, unsigned char *data_buffer);
+typedef void line_fn(unsigned short y, unsigned char *data_buffer,
+                     unsigned int len);
 
 #endif

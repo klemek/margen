@@ -1,14 +1,17 @@
 #include "args.h"
 #include "bmp.h"
 #include <stdio.h>
-#include <string.h>
 
 #define COLOR_DEPTH 3
 
 parameters global_params;
 
-void generate_line(unsigned short y, unsigned char *data_buffer) {
-  memset(data_buffer, y, global_params.width * COLOR_DEPTH);
+void generate_line(unsigned short y, unsigned char *data_buffer,
+                   unsigned int len) {
+  unsigned int i;
+  for (i = 0; i < len; i++) {
+    data_buffer[i] = global_params.start[i % 3];
+  }
 }
 
 void debug_parameters(parameters params) {
