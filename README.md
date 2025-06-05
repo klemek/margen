@@ -10,13 +10,12 @@ Written in pure C without librairies.
 
 ## Install
 
-You only need **gcc** and **make**.
-
 ```bash
 git clone https://github.com/klemek/margen
 cd margen
-make clean build install
-# margen is now installed in ~/.local/bin
+./configure
+make
+make install
 ```
 
 ## CLI arguments

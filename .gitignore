@@ -16,3 +16,4 @@ depcomp
 Makefile.in
 configure~
 config.status
+margen
