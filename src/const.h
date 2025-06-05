@@ -2,6 +2,6 @@
 #define CONST_H
 
 #define NAME "margen"
-#define VERSION "v1.0.2"
+#define VERSION "v1.1.0"
 
 #endif
