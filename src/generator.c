@@ -45,12 +45,13 @@ void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
                        unsigned int len) {
   unsigned int i;
   unsigned int x;
-  if (y > 0 && (y % global_params.size) == 0) {
+  if (y % global_params.size == 0) {
     generate_line();
   }
   for (i = 0; i < len; i++) {
     x = i / (BMP_COLOR_DEPTH * global_params.size);
-    data_buffer[i] = current_line[x * color_depth + (i % color_depth)];
+    data_buffer[(global_params.rotation / 2) == 1 ? i : (len - i - 1)] =
+        current_line[x * color_depth + (i % color_depth)];
   }
 }
 
@@ -70,6 +71,7 @@ void debug_parameters(parameters params) {
       printf("  var.    %u,%u,%u\n", params.var[0], params.var[1],
              params.var[2]);
     }
+    printf("  rot.    %d\n", params.rotation);
   }
 }
 
@@ -86,7 +88,6 @@ void init(parameters params) {
     current_line[i] = params.start[i % color_depth];
   }
   set_seed(params.seed);
-  generate_line();
 }
 
 void clean() {
@@ -107,8 +108,8 @@ void generate(parameters params) {
   }
   clock_t start = clock();
   init(params);
-  bmp_generate(params.width, params.height, BMP_COLOR_DEPTH, params.file_path,
-               generate_bmp_line);
+  bmp_generate(params.width, params.height, BMP_COLOR_DEPTH,
+               params.rotation % 2 == 1, params.file_path, generate_bmp_line);
   clean();
   print_time(params, start);
 }

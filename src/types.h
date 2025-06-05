@@ -14,6 +14,7 @@ struct Parameters {
   unsigned char slope;
   unsigned char start[3];
   unsigned char var[3];
+  unsigned char rotation;
 };
 
 typedef struct Parameters parameters;

@@ -2,7 +2,9 @@
 
 > generate a marble-like pattern bitmap image, blazing fast.
 
-![](./images/sample.gif)
+<p align="center">
+  <img width="960" height="360" src="./images/sample.gif">
+</p>
 
 Written in pure C without librairies.
 
@@ -20,7 +22,7 @@ make clean build install
 ## CLI arguments
 
 ```txt
-usage: margen [--help] [-v] [-q] [-w=WIDTH] [-h=HEIGHT] [-o=PATH] [--seed=SEED][-p=PIXEL_SIZE] [-s=SLOPE] [-c=R,G,B] [--var=R,G,B] [-vr=VAR_RANGE] [-m]
+usage: margen [--help] [-v] [-q] [-w=WIDTH] [-h=HEIGHT] [-o=PATH] [--seed=SEED][-p=PIXEL_SIZE] [-s=SLOPE] [-c=R,G,B] [-va=R,G,B] [-vr=VAR_RANGE] [-r=ROTATION] [-m]
 
 generate a marble-like pattern bitmap image, blazing fast.
 
@@ -36,9 +38,10 @@ options:
   -c, --color        base color [0-255,0-255,0-255] (default: random)
   -va, --variation   fixed variation [0-255,0-255,0-255] (default: random)
   -vr, --var-range   random variation range [0-255] (default: 30)
+  -r, --rotation     start corner rotation [0-3] (default: random)
   -m, --monochrome   grayscale generation
 ```
 
 ## TODO
 
-- select corner (currently bottom left)
+- configure, make, make install

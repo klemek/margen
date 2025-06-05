@@ -33,3 +33,12 @@ release: clean build time
 		git commit -m "$(TARGET) v$$VERSION"; \
 		git tag v$$VERSION -m "$(TARGET) v$$VERSION"
 	@echo updated ./src/const.h and tagged version
+
+.PHONY: gif
+gif: build
+	mkdir -p tmp
+	for i in {1..50}; do \
+		./build/margen -w=1920 -h=720 --seed=$$i$$i -o=tmp/image$$i.bmp ; \
+	done
+	ffmpeg -y -f image2 -framerate 1 -i tmp/image%d.bmp -vf scale=960x360 images/sample.gif
+	rm -rf tmp
