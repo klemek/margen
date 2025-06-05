@@ -3,9 +3,7 @@
 > generate a marble-like pattern bitmap image, blazing fast.
 
 <p align="center">
-
-  ![](./images/sample.gif)
-
+  <img width="640" height="360" src="./images/sample.gif">
 </p>
 
 Written in pure C without librairies.
