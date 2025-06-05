@@ -20,8 +20,9 @@ void print_help(int status_code) {
        "[-p=PIXEL_SIZE] "
        "[-s=SLOPE] "
        "[-c=R,G,B] "
-       "[--var=R,G,B] "
-       "[-vr=VAR_RANGE]"
+       "[-va=R,G,B] "
+       "[-vr=VAR_RANGE] "
+       "[-r=ROTATION] "
        //  "[-m]"
        "\n\n"
        "generate a marble-like pattern bitmap image, blazing fast.\n\n"
@@ -38,6 +39,7 @@ void print_help(int status_code) {
        "  -va, --variation   fixed variation [0-255,0-255,0-255] (default: "
        "random)\n"
        "  -vr, --var-range   random variation range [0-255] (default: 30)\n"
+       "  -r, --rotation    start corner rotation [0-3] (default: random)\n"
        //  "  -m, --monochrome   black & white generation\n"
   );
   exit(status_code);
@@ -131,6 +133,7 @@ parameters parse_args(int argc, char **argv) {
   bool slope_set = false;
   bool start_set = false;
   bool var_set = false;
+  bool rot_set = false;
 
   int i;
   char *arg;
@@ -182,8 +185,11 @@ parameters parse_args(int argc, char **argv) {
       var_set = true;
     } else if (is_arg(arg, "-vr") || is_arg(arg, "--var-range")) {
       var_range = parse_char(arg, value);
-      // } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
-      //   params.monochrome = true;
+    } else if (is_arg(arg, "-r") || is_arg(arg, "--rotation")) {
+      params.rotation = parse_char(arg, value) % 4;
+      rot_set = true;
+    } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
+      params.monochrome = true;
     } else {
       invalid_arg(arg);
     }
@@ -214,6 +220,10 @@ parameters parse_args(int argc, char **argv) {
     params.var[0] = rand_uchar(var_range);
     params.var[1] = rand_uchar(var_range);
     params.var[2] = rand_uchar(var_range);
+  }
+
+  if (!rot_set) {
+    params.rotation = rand_uchar(4);
   }
 
   return params;
