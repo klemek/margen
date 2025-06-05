@@ -10,6 +10,20 @@ Written in pure C without librairies.
 
 ## Install
 
+### From release
+
+See [Releases](https://github.com/klemek/margen/releases)
+
+```bash
+tar xvzf margen-x.y.z.tar.gz
+cd margen-x.y.z
+./configure
+make
+make install
+```
+
+### From repository (dev version)
+
 ```bash
 git clone https://github.com/klemek/margen
 cd margen
