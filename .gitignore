@@ -18,3 +18,4 @@ configure~
 config.status
 margen
 *.tar.gz
+configure

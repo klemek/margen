@@ -27,6 +27,9 @@ make install
 ```bash
 git clone https://github.com/klemek/margen
 cd margen
+aclocal
+autoconf
+automake --add-missing
 ./configure
 make
 make install
