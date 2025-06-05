@@ -38,7 +38,7 @@ release: clean build time
 gif: build
 	mkdir -p tmp
 	for i in {1..50}; do \
-		./build/margen --seed=$$i$$i -o=tmp/image$$i.bmp ; \
+		./build/margen -w=1920 -h=720 --seed=$$i$$i -o=tmp/image$$i.bmp ; \
 	done
-	ffmpeg -y -f image2 -framerate 1 -i tmp/image%d.bmp -vf scale=640x360 images/sample.gif
+	ffmpeg -y -f image2 -framerate 1 -i tmp/image%d.bmp -vf scale=960x360 images/sample.gif
 	rm -rf tmp
