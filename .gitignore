@@ -8,3 +8,11 @@ Makefile
 *.log
 *.o
 .dirstamp
+aclocal.m4
+compile
+install-sh
+missing
+depcomp
+Makefile.in
+configure~
+config.status

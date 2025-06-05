@@ -1,3 +1,7 @@
-AUTOMAKE_OPTIONS = foreign subdir-objects
+AUTOMAKE_OPTIONS = foreign subdir-objects -Wall
 bin_PROGRAMS = margen
-margen_SOURCES = src/main.c src/main.h src/args.c src/args.h src/bmp.c src/bmp.h src/const.h src/generator.c src/generator.h src/rand.c src/rand.h src/types.h
+margen_SOURCES = src/main.c src/args.c src/bmp.c src/generator.c src/rand.c
+nodist_margen_SOURCES = src/main.h src/args.h src/bmp.h src/const.h src/generator.h src/rand.h src/types.h
+BUILT_SOURCES = src/main.h src/args.h src/bmp.h src/const.h src/generator.h src/rand.h src/types.h
+CLEANFILES = src/main.h src/args.h src/bmp.h src/const.h src/generator.h src/rand.h src/types.h
+margen_LDFLAGS = -lm
