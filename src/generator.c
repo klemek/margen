@@ -2,7 +2,6 @@
 #include "bmp.h"
 #include "config.h"
 #include "rand.h"
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -18,11 +17,10 @@ unsigned char *current_line;
 
 unsigned char generate_pixel(unsigned char depth, unsigned char top_pixel,
                              unsigned char left_pixel) {
-  float v = fminf(
-      255.0, fmaxf(0.0, (rand_float(2.0) - 1.0) * global_params.var[depth] +
-                            ((float)left_pixel) * slope +
-                            ((float)top_pixel) * (1.0 - slope)));
-  return (unsigned char)v;
+  short k = rand_uchar(global_params.var[depth]);
+  short v = (rand_uchar(2) == 0 ? k : -k) + (left_pixel)*slope +
+            (top_pixel) * (1.0 - slope);
+  return (unsigned char)(v < 0 ? 0 : (v > 256 ? (unsigned char)256 : v));
 }
 
 void generate_line() {

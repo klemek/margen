@@ -216,9 +216,9 @@ parameters parse_args(int argc, char **argv) {
   }
 
   if (!var_set) {
-    params.var[0] = rand_uchar(var_range);
-    params.var[1] = rand_uchar(var_range);
-    params.var[2] = rand_uchar(var_range);
+    params.var[0] = rand_uchar(var_range + 1);
+    params.var[1] = rand_uchar(var_range + 1);
+    params.var[2] = rand_uchar(var_range + 1);
   }
 
   if (!rot_set) {

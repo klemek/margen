@@ -1,21 +1,29 @@
-#include <math.h>
+#include <stdint.h>
 
-float seed;
+static unsigned long long mcg_state = 0xcafef00dd15ea5e5u; // Must be odd
+static unsigned long long const multiplier = 6364136223846793005u;
 
-void set_seed(unsigned long new_seed) { seed = (float)(new_seed % 1000000); }
+// https://en.wikipedia.org/wiki/Permuted_congruential_generator
+unsigned long rand(void) {
+  unsigned long long x = mcg_state;
+  unsigned count = (unsigned)(x >> 61);
 
-float rand(float seed) {
-  float v = powf(seed, 6. / 7.);
-  v *= sinf(v) + 1.;
-  return v - floorf(v);
+  mcg_state = x * multiplier;
+  x ^= x >> 22;
+  return (unsigned long)(x >> (22 + count));
 }
 
-float rand_float(const float max) { return rand(seed++) * max; }
+void set_seed(unsigned long long seed) {
+  mcg_state = 2 * seed + 1;
+  (void)rand();
+}
+
+float rand_float(const float max) { return ((float)rand()) * max; }
 
 unsigned char rand_uchar(const unsigned int max) {
-  return (unsigned char)(rand(seed++) * max);
+  return max == 0 ? 0 : (unsigned char)(rand() % max);
 }
 
 unsigned short rand_ushort(const unsigned int max) {
-  return (unsigned short)(rand(seed++) * max);
+  return max == 0 ? 0 : (unsigned short)(rand() % max);
 }
