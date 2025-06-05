@@ -22,7 +22,7 @@ make clean build install
 ## CLI arguments
 
 ```txt
-usage: margen [--help] [-v] [-q] [-w=WIDTH] [-h=HEIGHT] [-o=PATH] [--seed=SEED][-p=PIXEL_SIZE] [-s=SLOPE] [-c=R,G,B] [-va=R,G,B] [-vr=VAR_RANGE] [-r=ROTATION]
+usage: margen [--help] [-v] [-q] [-w=WIDTH] [-h=HEIGHT] [-o=PATH] [--seed=SEED][-p=PIXEL_SIZE] [-s=SLOPE] [-c=R,G,B] [-va=R,G,B] [-vr=VAR_RANGE] [-r=ROTATION] [-m]
 
 generate a marble-like pattern bitmap image, blazing fast.
 
@@ -39,8 +39,9 @@ options:
   -va, --variation   fixed variation [0-255,0-255,0-255] (default: random)
   -vr, --var-range   random variation range [0-255] (default: 30)
   -r, --rotation     start corner rotation [0-3] (default: random)
+  -m, --monochrome   grayscale generation
 ```
 
 ## TODO
 
-- fix monochrome
+- configure, make, make install

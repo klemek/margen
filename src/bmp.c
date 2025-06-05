@@ -32,23 +32,36 @@ unsigned char *bmp_header(unsigned short width, unsigned short height,
   unsigned char *output = (unsigned char *)malloc(HEADER_SIZE);
   unsigned int data_length = ((unsigned int)width) * ((unsigned int)height) *
                              ((unsigned int)color_depth);
-  write_str(output, 0x00, 0x02, (unsigned char *)"BM"); // 0x00(2) BM
-  write_num(output, 0x02, 0x04,
-            HEADER_SIZE + data_length);       // 0x02(4) file size
-  write_nul(output, 0x06, 0x04);              // 0x06(4) application reserved
-  write_num(output, 0x0A, 0x04, HEADER_SIZE); // 0x0A(4) data offset
-  write_num(output, 0x0E, 0x04, 40);          // 0x0E(4) DIB header size
-  write_num(output, 0x12, 0x04, width);       // 0x12(4) width
-  write_num(output, 0x16, 0x04, height);      // 0x16(4) height
-  write_num(output, 0x1A, 0x04, 1);           // 0x1A(2) color panes
-  write_num(output, 0x1C, 0x02, color_depth * 8); // 0x1C(2) bits per pixel
-  write_nul(output, 0x1E, 0x04); // 0x1E(4) BI_RGB, no compression
-  write_num(output, 0x22, 0x04,
-            data_length);              // 0x22(4) size of raw bitmap data
-  write_num(output, 0x26, 0x04, 2835); // 0x26(4) horizontal print resolution
-  write_num(output, 0x2A, 0x04, 2835); // 0x2A(4) vertical print resolution
-  write_nul(output, 0x2E, 0x04);       // 0x2E(4) color in palette
-  write_nul(output, 0x32, 0x04);       // 0x32(4) 0 important colors
+  // 0x00(2) BM
+  write_str(output, 0x00, 0x02, (unsigned char *)"BM");
+  // 0x02(4) file size
+  write_num(output, 0x02, 0x04, HEADER_SIZE + data_length);
+  // 0x06(4) application reserved
+  write_nul(output, 0x06, 0x04);
+  // 0x0A(4) data offset
+  write_num(output, 0x0A, 0x04, HEADER_SIZE);
+  // 0x0E(4) DIB header size
+  write_num(output, 0x0E, 0x04, 40);
+  // 0x12(4) width
+  write_num(output, 0x12, 0x04, width);
+  // 0x16(4) height
+  write_num(output, 0x16, 0x04, height);
+  // 0x1A(2) color panes
+  write_num(output, 0x1A, 0x04, 1);
+  // 0x1C(2) bits per pixel
+  write_num(output, 0x1C, 0x02, color_depth * 8);
+  // 0x1E(4) BI_RGB, no compression
+  write_nul(output, 0x1E, 0x04);
+  // 0x22(4) size of raw bitmap data
+  write_num(output, 0x22, 0x04, data_length);
+  // 0x26(4) horizontal print resolution
+  write_num(output, 0x26, 0x04, 2835);
+  // 0x2A(4) vertical print resolution
+  write_num(output, 0x2A, 0x04, 2835);
+  // 0x2E(4) color in palette (0)
+  write_nul(output, 0x2E, 0x04);
+  // 0x32(4) important colors (0)
+  write_nul(output, 0x32, 0x04);
 
   return output;
 }

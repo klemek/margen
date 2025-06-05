@@ -40,8 +40,7 @@ void print_help(int status_code) {
        "random)\n"
        "  -vr, --var-range   random variation range [0-255] (default: 30)\n"
        "  -r, --rotation    start corner rotation [0-3] (default: random)\n"
-       //  "  -m, --monochrome   black & white generation\n"
-  );
+       "  -m, --monochrome   grayscale generation\n");
   exit(status_code);
 }
 
