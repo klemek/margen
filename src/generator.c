@@ -48,7 +48,8 @@ void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
   }
   for (i = 0; i < len; i++) {
     x = i / (color_depth * global_params.size);
-    data_buffer[i] = current_line[x * color_depth + (i % color_depth)];
+    data_buffer[(global_params.rotation / 2) == 1 ? i : (len - i - 1)] =
+        current_line[x * color_depth + (i % color_depth)];
   }
 }
 
