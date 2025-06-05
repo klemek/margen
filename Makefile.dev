@@ -32,8 +32,8 @@ gif: build
 	ffmpeg -y -f image2 -framerate 1 -i tmp/image%d.bmp -vf scale=960x360 images/sample.gif
 	rm -rf tmp
 
-.PHONY: automake
-automake:
+.PHONY: release
+release:
 	aclocal
 	autoconf
 	automake --add-missing
