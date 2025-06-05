@@ -41,5 +41,4 @@ options:
 
 ## TODO
 
-- fix monochrome
 - select corner (currently bottom left)
