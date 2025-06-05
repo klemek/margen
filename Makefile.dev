@@ -23,14 +23,6 @@ time: build
 valgrind: build
 	valgrind --leak-check=full -s ./build/$(TARGET) $(TEST_ARGS)
 
-.PHONY: release
-release: clean build time
-	@echo -n "Version (x.y.z): "
-	@read VERSION; \
-		git commit -m "$(TARGET) v$$VERSION"; \
-		git tag v$$VERSION -m "$(TARGET) v$$VERSION"
-	@echo updated ./src/config.h and tagged version
-
 .PHONY: gif
 gif: build
 	mkdir -p tmp
@@ -39,3 +31,11 @@ gif: build
 	done
 	ffmpeg -y -f image2 -framerate 1 -i tmp/image%d.bmp -vf scale=960x360 images/sample.gif
 	rm -rf tmp
+
+.PHONY: automake
+automake:
+	aclocal
+	autoconf
+	automake --add-missing
+	./configure
+	make distcheck
