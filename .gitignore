@@ -2,3 +2,7 @@ build
 .vscode
 *.bmp
 !images/*
+*.cache
+.deps
+Makefile
+*.log
