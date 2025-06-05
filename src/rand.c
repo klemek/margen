@@ -18,8 +18,6 @@ void set_seed(unsigned long long seed) {
   (void)rand();
 }
 
-float rand_float(const float max) { return ((float)rand()) * max; }
-
 unsigned char rand_uchar(const unsigned int max) {
   return max == 0 ? 0 : (unsigned char)(rand() % max);
 }
