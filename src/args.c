@@ -38,8 +38,7 @@ void print_help(int status_code) {
        "  -va, --variation   fixed variation [0-255,0-255,0-255] (default: "
        "random)\n"
        "  -vr, --var-range   random variation range [0-255] (default: 30)\n"
-       //  "  -m, --monochrome   black & white generation\n"
-  );
+       "  -m, --monochrome   black & white generation\n");
   exit(status_code);
 }
 
@@ -182,8 +181,8 @@ parameters parse_args(int argc, char **argv) {
       var_set = true;
     } else if (is_arg(arg, "-vr") || is_arg(arg, "--var-range")) {
       var_range = parse_char(arg, value);
-      // } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
-      //   params.monochrome = true;
+    } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
+      params.monochrome = true;
     } else {
       invalid_arg(arg);
     }

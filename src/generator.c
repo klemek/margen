@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define BMP_COLOR_DEPTH 3
+
 parameters global_params;
 float slope;
 unsigned char color_depth;
@@ -47,7 +49,7 @@ void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
     generate_line();
   }
   for (i = 0; i < len; i++) {
-    x = i / (color_depth * global_params.size);
+    x = i / (BMP_COLOR_DEPTH * global_params.size);
     data_buffer[i] = current_line[x * color_depth + (i % color_depth)];
   }
 }
@@ -105,7 +107,7 @@ void generate(parameters params) {
   }
   clock_t start = clock();
   init(params);
-  bmp_generate(params.width, params.height, color_depth, params.file_path,
+  bmp_generate(params.width, params.height, BMP_COLOR_DEPTH, params.file_path,
                generate_bmp_line);
   clean();
   print_time(params, start);
