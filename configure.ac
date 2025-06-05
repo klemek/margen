@@ -1,4 +1,4 @@
-AC_INIT([margen], [1.1.0], [klemek.dev@proton.me])
+AC_INIT([margen], [1.2.0], [klemek.dev@proton.me])
 AM_INIT_AUTOMAKE
 AC_PROG_CC
 AC_CHECK_HEADERS([stdio.h])
