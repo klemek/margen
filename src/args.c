@@ -23,7 +23,7 @@ void print_help(int status_code) {
        "[-va=R,G,B] "
        "[-vr=VAR_RANGE] "
        "[-r=ROTATION] "
-       //  "[-m]"
+       "[-m]"
        "\n\n"
        "generate a marble-like pattern bitmap image, blazing fast.\n\n"
        "options:\n"
