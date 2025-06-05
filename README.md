@@ -2,7 +2,11 @@
 
 > generate a marble-like pattern bitmap image, blazing fast.
 
-![](./images/sample.gif)
+<p align="center">
+
+  ![](./images/sample.gif)
+
+</p>
 
 Written in pure C without librairies.
 
