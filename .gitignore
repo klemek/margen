@@ -19,3 +19,6 @@ config.status
 margen
 *.tar.gz
 configure
+src/margen*
+*.pkg.tar.zst
+pkg

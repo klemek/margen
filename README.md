@@ -14,7 +14,7 @@ Written in pure C without librairies.
 
 See [Releases](https://github.com/klemek/margen/releases)
 
-```bash
+```sh
 tar xvzf margen-x.y.z.tar.gz
 cd margen-x.y.z
 ./configure
@@ -22,9 +22,18 @@ make
 make install
 ```
 
+### From PKGBrepository (PKGBUILD)
+
+```sh
+git clone https://github.com/klemek/margen
+cd margen
+pkbuild -si
+```
+
+
 ### From repository (dev version)
 
-```bash
+```sh
 git clone https://github.com/klemek/margen
 cd margen
 aclocal
