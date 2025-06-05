@@ -40,7 +40,3 @@ options:
   -r, --rotation     start corner rotation [0-3] (default: random)
   -m, --monochrome   grayscale generation
 ```
-
-## TODO
-
-- configure, make, make install
