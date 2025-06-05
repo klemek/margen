@@ -1,6 +1,6 @@
 #include "args.h"
 #include "bmp.h"
-#include "const.h"
+#include "config.h"
 #include "rand.h"
 #include <math.h>
 #include <stdio.h>
@@ -104,7 +104,7 @@ void print_time(parameters params, clock_t start) {
 
 void generate(parameters params) {
   if (!params.quiet) {
-    puts(NAME " " VERSION);
+    puts(PACKAGE " " VERSION);
   }
   clock_t start = clock();
   init(params);

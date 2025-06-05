@@ -1,5 +1,5 @@
 #include "args.h"
-#include "const.h"
+#include "config.h"
 #include "rand.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,9 +7,9 @@
 #include <time.h>
 
 void print_help(int status_code) {
-  puts(NAME
+  puts(PACKAGE
        " " VERSION "\n\n"
-       "usage: " NAME " "
+       "usage: " PACKAGE " "
        "[--help] "
        "[-v] "
        "[-q] "
@@ -145,7 +145,7 @@ parameters parse_args(int argc, char **argv) {
     } else if (is_arg(arg, "-q") || is_arg(arg, "--quiet")) {
       params.quiet = true;
     } else if (is_arg(arg, "-v") || is_arg(arg, "--version")) {
-      puts(NAME " " VERSION);
+      puts(PACKAGE " " VERSION);
       exit(0);
     } else if (is_arg(arg, "-w") || is_arg(arg, "--width")) {
       params.width = parse_ushort(arg, value);
