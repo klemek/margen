@@ -39,7 +39,7 @@ void print_help(int status_code) {
        "  -va, --variation   fixed variation [0-255,0-255,0-255] (default: "
        "random)\n"
        "  -vr, --var-range   random variation range [0-255] (default: 30)\n"
-       "  -r, --rotation   start corner rotation [0-3] (default: random)\n"
+       "  -r, --rotation    start corner rotation [0-3] (default: random)\n"
        //  "  -m, --monochrome   black & white generation\n"
   );
   exit(status_code);
