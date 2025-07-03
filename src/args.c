@@ -32,7 +32,7 @@ void print_help(int status_code) {
        "  -w, --width        image width (default: 1920)\n"
        "  -h, --height       image height (default: 1080)\n"
        "  -o, --output       output file (default: output.bmp)\n"
-       "  -seed              random seed (default: time based)\n"
+       "  --seed             random seed (default: time based)\n"
        "  -p, --pixel        pixel size (default: random)\n"
        "  -s, --slope        slope [0-255] (default: random)\n"
        "  -c, --color        base color [0-255,0-255,0-255] (default: random)\n"
@@ -99,7 +99,7 @@ unsigned short parse_ushort(char *arg, char *value) {
   return (unsigned short)tmp_value;
 }
 
-unsigned short parse_ulong(char *arg, char *value) {
+unsigned long parse_ulong(char *arg, char *value) {
   if (!is_number(value)) {
     invalid_value(arg, value);
   }

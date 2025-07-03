@@ -57,7 +57,7 @@ options:
   -w, --width        image width (default: 1920)
   -h, --height       image height (default: 1080)
   -o, --output       output file (default: output.bmp)
-  -seed              random seed (default: time based)
+  --seed             random seed (default: time based)
   -p, --pixel        pixel size (default: random)
   -s, --slope        slope [0-255] (default: random)
   -c, --color        base color [0-255,0-255,0-255] (default: random)
