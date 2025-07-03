@@ -31,6 +31,12 @@ release:
 	./configure
 	make distcheck
 
+.PHONY: release-arch
+release-arch: clean
+	mkdir -p build
+	cp PKGBUILD build
+	cd build && makepkg
+
 .PHONY: gif
 gif: build
 	mkdir -p tmp

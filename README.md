@@ -22,12 +22,12 @@ make
 make install
 ```
 
-### From PKGBrepository (PKGBUILD)
+### From repository (PKGBUILD)
 
 ```sh
 git clone https://github.com/klemek/margen
 cd margen
-pkbuild -si
+makepkg -si
 ```
 
 
@@ -65,4 +65,23 @@ options:
   -vr, --var-range   random variation range [0-255] (default: 30)
   -r, --rotation     start corner rotation [0-3] (default: random)
   -m, --monochrome   grayscale generation
+```
+
+## Release guide
+
+```bash
+# update configure.ac with new version
+$EDITOR configure.ac
+# make full build
+make -f Makefile.dev release
+# push to repo
+git commit -am "margen vX.Y.Z"
+git tag vX.Y.Z
+git push origin master --tags
+# create release from tag on github
+# update PKGBUILD with new sha256 sum
+sha256sum margen-x.y.z.tar.gz
+make -f Makefile.dev release-arch
+git commit -am "update arch sha256"
+# add .pkg.tar.zst on the release
 ```
