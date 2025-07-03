@@ -1,5 +1,5 @@
 pkgname=margen
-pkgver=1.2.1
+pkgver=1.2.2
 pkgrel=1
 pkgdesc="Generate a marble-like pattern bitmap image, blazing fast."
 arch=('i686' 'pentium4' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64' 'riscv64')
