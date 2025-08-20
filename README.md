@@ -74,14 +74,15 @@ options:
 $EDITOR configure.ac
 # make full build
 make -f Makefile.dev release
+# update PKGBUILD with new version and sha256 sum
+sha256sum margen-x.y.z.tar.gz
+$EDITOR PKGBUILD
 # push to repo
 git commit -am "margen vX.Y.Z"
 git tag vX.Y.Z
 git push origin master --tags
 # create release from tag on github
-# update PKGBUILD with new sha256 sum
-sha256sum margen-x.y.z.tar.gz
+# attach .tar.gz to the github release
 make -f Makefile.dev release-arch
-git commit -am "update arch sha256"
-# add .pkg.tar.zst on the release
+# attach .pkg.tar.zst to the github release
 ```
