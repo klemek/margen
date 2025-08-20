@@ -7,7 +7,15 @@ on:
     branches: ["master"]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: gcc
+        run: mkdir -p build && gcc -v -Wall -Werror src/*.c src/*.h -lm -o build/out
+
   build-release:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,10 +31,3 @@ jobs:
         run: make
       - name: make distcheck
         run: make distcheck
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: gcc
-        run: mkdir -p build && gcc -v -Wall -Werror src/*.c src/*.h -lm -o build/out
