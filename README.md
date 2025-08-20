@@ -70,6 +70,8 @@ options:
 ## Release guide
 
 ```bash
+# get latest version
+git pull origin master
 # update configure.ac with new version
 $EDITOR configure.ac
 # make full build

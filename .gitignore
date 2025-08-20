@@ -7,6 +7,8 @@ build
 Makefile
 *.log
 *.o
+*.h.gch
+*.out
 .dirstamp
 aclocal.m4
 compile
