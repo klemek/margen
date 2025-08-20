@@ -68,7 +68,7 @@ bool is_number(char *value) {
     return false;
   }
   unsigned long value_len = strlen(value);
-  int i;
+  unsigned int i;
   for (i = 0; i < value_len; i++) {
     if (!is_digit(value[i])) {
       return false;
