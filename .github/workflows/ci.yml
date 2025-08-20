@@ -29,4 +29,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: gcc
-        run: mkdir -p build && gcc -Wall -Werror src/*.c src/*.h -lm -o build/out
+        run: mkdir -p build && gcc -v -Wall -Werror src/*.c src/*.h -lm -o build/out
