@@ -1,11 +1,11 @@
 pkgname=margen
-pkgver=1.2.4
+pkgver=1.2.5
 pkgrel=1
 pkgdesc="Generate a marble-like pattern bitmap image, blazing fast."
 arch=('i686' 'pentium4' 'x86_64' 'arm' 'armv7h' 'armv6h' 'aarch64' 'riscv64')
 url="https://github.com/klemek/margen"
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/klemek/margen/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('38fc6a66be97f6f77f9dffdbf75c214c7aa3ee8d1600b28506e943e6bfb93870')
+sha256sums=('ff4375dacec14bce1f67bb6964232c54b184f820aaad02fda4313c58d78133c6')
 srcdir=build
 
 build() {
