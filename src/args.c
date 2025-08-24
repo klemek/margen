@@ -1,6 +1,7 @@
 #include "args.h"
 #include "config.h"
 #include "rand.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,6 +29,7 @@ void print_help(int status_code) {
        "generate a marble-like pattern bitmap image, blazing fast.\n\n"
        "options:\n"
        "  --help             show this help message and exit\n"
+       "  -v, --version      print version\n"
        "  -q, --quiet        do not print to console\n"
        "  -w, --width        image width (default: 1920)\n"
        "  -h, --height       image height (default: 1080)\n"

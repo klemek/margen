@@ -53,6 +53,7 @@ generate a marble-like pattern bitmap image, blazing fast.
 
 options:
   --help             show this help message and exit
+  -v, --version      print version
   -q, --quiet        do not print to console
   -w, --width        image width (default: 1920)
   -h, --height       image height (default: 1080)
