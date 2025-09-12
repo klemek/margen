@@ -24,3 +24,4 @@ configure
 src/margen*
 *.pkg.tar.zst
 pkg
+margen-*

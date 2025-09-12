@@ -1,3 +1,5 @@
+[![C-lang CI](https://github.com/klemek/margen/actions/workflows/ci.yml/badge.svg)](https://github.com/klemek/margen/actions/workflows/ci.yml)
+
 # margen
 
 > generate a marble-like pattern bitmap image, blazing fast.
