@@ -6,13 +6,18 @@ on:
   pull_request:
     branches: ["master"]
 
+env:
+  GCC_ARGS: src/*.c src/*.h -lm
+  TARGET: margen
+  TEST_ARGS: ""
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: gcc
-        run: mkdir -p build && gcc -v -Wall -Wextra -Werror src/*.c src/*.h -lm
+        run: gcc -v -Wall -Wextra -Werror $GCC_ARGS
 
   build-release:
     needs: lint
@@ -31,3 +36,12 @@ jobs:
         run: make
       - name: make distcheck
         run: make distcheck
+
+  run:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: gcc
+        run: mkdir -p build && gcc $GCC_ARGS -o build/$TARGET
+      - name: $TARGET
+        run: ./build/$TARGET $TEST_ARGS
