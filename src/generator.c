@@ -19,9 +19,9 @@ static unsigned char *current_line;
 static unsigned char generate_pixel(unsigned char depth,
                                     unsigned char top_pixel,
                                     unsigned char left_pixel) {
-  short k = rand_uchar(global_params.var[depth] + 1);
-  short v = (rand_uchar(2) == 0 ? k : -k) + (left_pixel)*slope +
-            (top_pixel) * (1.0 - slope);
+  int k = rand_uint(global_params.var[depth] + 1);
+  int v = (rand_uint(2) == 0 ? k : -k) + (left_pixel)*slope +
+          (top_pixel) * (1.0 - slope);
   return (unsigned char)(v < 0 ? 0 : (v > 255 ? (unsigned char)255 : v));
 }
 
@@ -41,7 +41,7 @@ static void generate_line() {
   }
 }
 
-static void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
+static void generate_bmp_line(unsigned int y, unsigned char *data_buffer,
                               unsigned int len) {
   unsigned int i;
   unsigned int x;

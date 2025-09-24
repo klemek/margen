@@ -7,7 +7,7 @@ on:
     branches: ["master"]
 
 env:
-  GCC_ARGS: src/*.c src/*.h
+  GCC_ARGS: src/*.c src/*.h -Ofast
   TARGET: margen
   TEST_ARGS: ""
 

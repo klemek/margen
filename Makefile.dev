@@ -9,7 +9,7 @@ clean:
 
 build:
 	@mkdir -p build
-	gcc -Wall -Wextra src/*.c src/*.h -o build/$(TARGET) -g
+	gcc -Wall -Wextra -Og -g src/*.c src/*.h -o build/$(TARGET)
 
 .PHONY: install
 install: build

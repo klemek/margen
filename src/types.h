@@ -7,17 +7,17 @@ typedef struct Parameters {
   bool quiet;
   bool monochrome;
   unsigned long seed;
-  unsigned short width;
-  unsigned short height;
+  unsigned int width;
+  unsigned int height;
   char *file_path;
-  unsigned short size;
-  unsigned char slope;
-  unsigned char start[3];
-  unsigned char var[3];
-  unsigned char rotation;
+  unsigned int size;
+  unsigned int slope;
+  unsigned int start[3];
+  unsigned int var[3];
+  unsigned int rotation;
 } Parameters;
 
-typedef void line_fn(unsigned short y, unsigned char *data_buffer,
+typedef void line_fn(unsigned int y, unsigned char *data_buffer,
                      unsigned int len);
 
 #endif

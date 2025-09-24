@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -81,26 +82,15 @@ static bool is_number(char *value) {
   return true;
 }
 
-static unsigned char parse_char(char *arg, char *value) {
+static unsigned int parse_uint(char *arg, char *value) {
   if (!is_number(value)) {
     invalid_value(arg, value);
   }
   unsigned long long tmp_value = (unsigned long long)atoll(value);
-  if (tmp_value >= 256) {
+  if (tmp_value >= UINT_MAX) {
     invalid_value(arg, value);
   }
-  return (unsigned char)tmp_value;
-}
-
-static unsigned short parse_ushort(char *arg, char *value) {
-  if (!is_number(value)) {
-    invalid_value(arg, value);
-  }
-  unsigned long long tmp_value = (unsigned long long)atoll(value);
-  if (tmp_value >= 65536) {
-    invalid_value(arg, value);
-  }
-  return (unsigned short)tmp_value;
+  return (unsigned int)tmp_value;
 }
 
 static unsigned long parse_ulong(char *arg, char *value) {
@@ -110,14 +100,14 @@ static unsigned long parse_ulong(char *arg, char *value) {
   return (unsigned long)atoll(value);
 }
 
-static void parse_color(char *arg, char *value, unsigned char color[3]) {
+static void parse_color(char *arg, char *value, unsigned int color[3]) {
   char *tmp;
   tmp = strtok(value, ",");
-  color[0] = parse_char(arg, tmp);
+  color[0] = parse_uint(arg, tmp);
   tmp = strtok(NULL, ",");
-  color[1] = parse_char(arg, tmp);
+  color[1] = parse_uint(arg, tmp);
   tmp = strtok(NULL, ",");
-  color[2] = parse_char(arg, tmp);
+  color[2] = parse_uint(arg, tmp);
 }
 
 Parameters args_parse(int argc, char **argv) {
@@ -152,7 +142,7 @@ Parameters args_parse(int argc, char **argv) {
       puts(PACKAGE " " VERSION);
       exit(0);
     } else if (is_arg(arg, "-w") || is_arg(arg, "--width")) {
-      params.width = parse_ushort(arg, value);
+      params.width = parse_uint(arg, value);
       if (params.width == 0) {
         invalid_value(arg, value);
       }
@@ -160,7 +150,7 @@ Parameters args_parse(int argc, char **argv) {
         params.height = params.width;
       }
     } else if (is_arg(arg, "-h") || is_arg(arg, "--height")) {
-      params.height = parse_ushort(arg, value);
+      params.height = parse_uint(arg, value);
       if (params.height == 0) {
         invalid_value(arg, value);
       }
@@ -172,13 +162,13 @@ Parameters args_parse(int argc, char **argv) {
     } else if (is_arg(arg, "-o") || is_arg(arg, "--output")) {
       params.file_path = value;
     } else if (is_arg(arg, "-p") || is_arg(arg, "--pixel")) {
-      params.size = parse_ushort(arg, value);
+      params.size = parse_uint(arg, value);
       if (params.size == 0) {
         invalid_value(arg, value);
       }
       size_set = true;
     } else if (is_arg(arg, "-s") || is_arg(arg, "--slope")) {
-      params.slope = parse_char(arg, value);
+      params.slope = parse_uint(arg, value);
       slope_set = true;
     } else if (is_arg(arg, "-c") || is_arg(arg, "--color")) {
       parse_color(arg, value, params.start);
@@ -187,9 +177,9 @@ Parameters args_parse(int argc, char **argv) {
       parse_color(arg, value, params.var);
       var_set = true;
     } else if (is_arg(arg, "-vr") || is_arg(arg, "--var-range")) {
-      var_range = parse_char(arg, value);
+      var_range = parse_uint(arg, value);
     } else if (is_arg(arg, "-r") || is_arg(arg, "--rotation")) {
-      params.rotation = parse_char(arg, value) % 4;
+      params.rotation = parse_uint(arg, value) % 4;
       rot_set = true;
     } else if (is_arg(arg, "-m") || is_arg(arg, "--monochrome")) {
       params.monochrome = true;
@@ -206,27 +196,27 @@ Parameters args_parse(int argc, char **argv) {
   rand_seed(params.seed);
 
   if (!size_set) {
-    params.size = rand_ushort(6) + 6;
+    params.size = rand_uint(6) + 6;
   }
 
   if (!slope_set) {
-    params.slope = rand_uchar(50) + 100;
+    params.slope = rand_uint(50) + 100;
   }
 
   if (!start_set) {
-    params.start[0] = rand_uchar(256);
-    params.start[1] = rand_uchar(256);
-    params.start[2] = rand_uchar(256);
+    params.start[0] = rand_uint(256);
+    params.start[1] = rand_uint(256);
+    params.start[2] = rand_uint(256);
   }
 
   if (!var_set) {
-    params.var[0] = rand_uchar(var_range + 1);
-    params.var[1] = rand_uchar(var_range + 1);
-    params.var[2] = rand_uchar(var_range + 1);
+    params.var[0] = rand_uint(var_range + 1);
+    params.var[1] = rand_uint(var_range + 1);
+    params.var[2] = rand_uint(var_range + 1);
   }
 
   if (!rot_set) {
-    params.rotation = rand_uchar(4);
+    params.rotation = rand_uint(4);
   }
 
   return params;
