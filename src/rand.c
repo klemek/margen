@@ -1,3 +1,5 @@
+#include "rand.h"
+
 static unsigned long long mcg_state = 0xcafef00dd15ea5e5u; // Must be odd
 static unsigned long long const multiplier = 6364136223846793005u;
 

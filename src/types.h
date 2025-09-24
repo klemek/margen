@@ -3,7 +3,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-struct Parameters {
+typedef struct Parameters {
   bool quiet;
   bool monochrome;
   unsigned long seed;
@@ -15,9 +15,7 @@ struct Parameters {
   unsigned char start[3];
   unsigned char var[3];
   unsigned char rotation;
-};
-
-typedef struct Parameters parameters;
+} Parameters;
 
 typedef void line_fn(unsigned short y, unsigned char *data_buffer,
                      unsigned int len);

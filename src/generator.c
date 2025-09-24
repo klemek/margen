@@ -1,14 +1,15 @@
-#include "args.h"
-#include "bmp.h"
-#include "config.h"
-#include "rand.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
+#include "args.h"
+#include "bmp.h"
+#include "config.h"
+#include "rand.h"
+
 #define BMP_COLOR_DEPTH 3
 
-parameters global_params;
+Parameters global_params;
 float slope;
 unsigned char color_depth;
 unsigned int line_width;
@@ -53,7 +54,7 @@ void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
   }
 }
 
-void debug_parameters(parameters params) {
+void debug_parameters(Parameters params) {
   if (!params.quiet) {
     printf("  output  %s\n", params.file_path);
     printf("  seed    %ld\n", params.seed);
@@ -74,7 +75,7 @@ void debug_parameters(parameters params) {
   }
 }
 
-void init(parameters params) {
+void init(Parameters params) {
   global_params = params;
   slope = ((float)params.slope) / 255.0;
   color_depth = params.monochrome ? 1 : 3;
@@ -94,14 +95,14 @@ void clean() {
   free(current_line);
 }
 
-void print_time(parameters params, clock_t start) {
+void print_time(Parameters params, clock_t start) {
   if (!params.quiet) {
     clock_t now = clock();
     printf("time: %.3fs\n", (float)(now - start) / CLOCKS_PER_SEC);
   }
 }
 
-void generate(parameters params) {
+void generate(Parameters params) {
   if (!params.quiet) {
     puts(PACKAGE " " VERSION);
   }

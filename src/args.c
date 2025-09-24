@@ -1,11 +1,13 @@
-#include "args.h"
-#include "config.h"
-#include "rand.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include "args.h"
+#include "config.h"
+#include "rand.h"
+#include "types.h"
 
 void print_help(int status_code) {
   puts(PACKAGE
@@ -118,8 +120,8 @@ void parse_color(char *arg, char *value, unsigned char color[3]) {
   color[2] = parse_char(arg, tmp);
 }
 
-parameters parse_args(int argc, char **argv) {
-  parameters params;
+Parameters parse_args(int argc, char **argv) {
+  Parameters params;
 
   params.quiet = false;
   params.seed = (unsigned long)time(NULL);

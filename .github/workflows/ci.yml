@@ -44,5 +44,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: gcc
         run: mkdir -p build && gcc $GCC_ARGS -o build/$TARGET
-      - name: $TARGET
+      - name: run program
         run: ./build/$TARGET $TEST_ARGS

@@ -9,7 +9,7 @@ clean:
 
 build:
 	@mkdir -p build
-	gcc -v -Wall -Wextra src/*.c src/*.h -o build/$(TARGET)
+	gcc -Wall -Wextra src/*.c src/*.h -o build/$(TARGET) -g
 
 .PHONY: install
 install: build
@@ -47,7 +47,26 @@ release: clean
 		Makefile.in \
 		missing \
 		src/.* \
-		src/*.o \
+		src/*.o
+
+.PHONY: release
+release-clean:
+	@rm -rf \
+		autom4te.cache \
+		aclocal.m4 \
+		compile \
+		config.* \
+		configure \
+		depcomp \
+		$(TARGET) \
+		$(TARGET)-*.tar.gz \
+		$(TARGET)-*.pkg.tar.zst \
+		install-sh \
+		Makefile \
+		Makefile.in \
+		missing \
+		src/.* \
+		src/*.o
 
 .PHONY: release-arch
 release-arch: clean
