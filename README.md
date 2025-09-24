@@ -80,7 +80,7 @@ $EDITOR configure.ac
 # make full build
 make -f Makefile.dev release
 # update PKGBUILD with new version and sha256 sum
-sha256sum margen-x.y.z.tar.gz
+sha256sum build/margen-x.y.z.tar.gz
 $EDITOR PKGBUILD
 # push to repo
 git commit -am "margen vX.Y.Z"
