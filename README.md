@@ -84,7 +84,7 @@ sha256sum build/margen-x.y.z.tar.gz
 $EDITOR PKGBUILD
 # push to repo
 git commit -am "margen vX.Y.Z"
-git tag vX.Y.Z
+git tag vX.Y.Z -m "margen vX.Y.Z"
 git push origin master --tags
 # create release from tag on github
 # attach .tar.gz to the github release
