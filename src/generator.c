@@ -19,14 +19,18 @@ static unsigned char *current_line;
 static unsigned char generate_pixel(unsigned char depth,
                                     unsigned char top_pixel,
                                     unsigned char left_pixel) {
-  int k = rand_uint(global_params.var[depth] + 1);
-  int v = (rand_uint(2) == 0 ? k : -k) + (left_pixel)*slope +
-          (top_pixel) * (1.0 - slope);
+  int k, v;
+
+  k = rand_uint(global_params.var[depth] + 1);
+  v = (rand_uint(2) == 0 ? k : -k) + (left_pixel)*slope +
+      (top_pixel) * (1.0 - slope);
+
   return (unsigned char)(v < 0 ? 0 : (v > 255 ? (unsigned char)255 : v));
 }
 
 static void generate_line() {
   unsigned int i;
+
   for (i = 0; i < line_width; i++) {
     last_line[i] = current_line[i];
   }
@@ -45,6 +49,7 @@ static void generate_bmp_line(unsigned int y, unsigned char *data_buffer,
                               unsigned int len) {
   unsigned int i;
   unsigned int x;
+
   if (y % global_params.size == 0) {
     generate_line();
   }
@@ -77,14 +82,15 @@ static void debug_parameters(Parameters params) {
 }
 
 static void init(Parameters params) {
+  unsigned int i;
+
   global_params = params;
   slope = ((float)params.slope) / 255.0;
   color_depth = params.monochrome ? 1 : 3;
   debug_parameters(params);
   line_width = ((params.width / params.size) + 1) * color_depth;
-  last_line = (unsigned char *)malloc(line_width);
-  current_line = (unsigned char *)malloc(line_width);
-  unsigned int i = 0;
+  last_line = malloc(line_width * sizeof(unsigned char));
+  current_line = malloc(line_width * sizeof(unsigned char));
   for (i = 0; i < line_width; i++) {
     current_line[i] = params.start[i % color_depth];
   }
@@ -104,10 +110,12 @@ static void print_time(Parameters params, clock_t start) {
 }
 
 void generator_run(Parameters params) {
+  clock_t start;
+
   if (!params.quiet) {
     puts(PACKAGE " " VERSION);
   }
-  clock_t start = clock();
+  start = clock();
   init(params);
   bmp_generate(params.width, params.height, BMP_COLOR_DEPTH,
                params.rotation % 2 == 1, params.file_path, generate_bmp_line);

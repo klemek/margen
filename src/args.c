@@ -69,27 +69,33 @@ static char *split_arg_value(char *arg) {
 static bool is_digit(char c) { return c >= '0' && c <= '9'; }
 
 static bool is_number(char *value) {
+  unsigned long value_len;
+  unsigned int i;
+
   if (value == NULL) {
     return false;
   }
-  unsigned long value_len = strlen(value);
-  unsigned int i;
+  value_len = strlen(value);
   for (i = 0; i < value_len; i++) {
     if (!is_digit(value[i])) {
       return false;
     }
   }
+
   return true;
 }
 
 static unsigned int parse_uint(char *arg, char *value) {
+  unsigned long long tmp_value;
+
   if (!is_number(value)) {
     invalid_value(arg, value);
   }
-  unsigned long long tmp_value = (unsigned long long)atoll(value);
+  tmp_value = (unsigned long long)atoll(value);
   if (tmp_value >= UINT_MAX) {
     invalid_value(arg, value);
   }
+
   return (unsigned int)tmp_value;
 }
 
@@ -102,6 +108,7 @@ static unsigned long parse_ulong(char *arg, char *value) {
 
 static void parse_color(char *arg, char *value, unsigned int color[3]) {
   char *tmp;
+
   tmp = strtok(value, ",");
   color[0] = parse_uint(arg, tmp);
   tmp = strtok(NULL, ",");
@@ -112,6 +119,10 @@ static void parse_color(char *arg, char *value, unsigned int color[3]) {
 
 Parameters args_parse(int argc, char **argv) {
   Parameters params;
+  unsigned char var_range;
+  bool size_set, slope_set, start_set, var_set, rot_set;
+  int i;
+  char *arg, *value;
 
   params.quiet = false;
   params.seed = (unsigned long)time(NULL);
@@ -120,22 +131,19 @@ Parameters args_parse(int argc, char **argv) {
   params.file_path = "output.bmp";
   params.monochrome = false;
 
-  unsigned char var_range = 30;
+  var_range = 30;
 
-  bool size_set = false;
-  bool slope_set = false;
-  bool start_set = false;
-  bool var_set = false;
-  bool rot_set = false;
+  size_set = false;
+  slope_set = false;
+  start_set = false;
+  var_set = false;
+  rot_set = false;
 
-  int i;
-  char *arg;
-  char *value;
   for (i = 1; i < argc; i++) {
     arg = argv[i];
     value = split_arg_value(arg);
     if (is_arg(arg, "--help")) {
-      print_help(0);
+      print_help(EXIT_SUCCESS);
     } else if (is_arg(arg, "-q") || is_arg(arg, "--quiet")) {
       params.quiet = true;
     } else if (is_arg(arg, "-v") || is_arg(arg, "--version")) {
