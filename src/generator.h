@@ -3,6 +3,6 @@
 #ifndef GENERATOR_H
 #define GENERATOR_H
 
-void generate(Parameters params);
+void generator_run(Parameters params);
 
 #endif

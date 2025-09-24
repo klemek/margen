@@ -4,7 +4,7 @@ static unsigned long long mcg_state = 0xcafef00dd15ea5e5u; // Must be odd
 static unsigned long long const multiplier = 6364136223846793005u;
 
 // https://en.wikipedia.org/wiki/Permuted_congruential_generator
-unsigned long rand(void) {
+static unsigned long rand(void) {
   unsigned long long x = mcg_state;
   unsigned count = (unsigned)(x >> 61);
 
@@ -13,7 +13,7 @@ unsigned long rand(void) {
   return (unsigned long)(x >> (22 + count));
 }
 
-void set_seed(unsigned long long seed) {
+void rand_seed(unsigned long long seed) {
   mcg_state = 2 * seed + 1;
   (void)rand();
 }

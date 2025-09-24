@@ -9,22 +9,23 @@
 
 #define BMP_COLOR_DEPTH 3
 
-Parameters global_params;
-float slope;
-unsigned char color_depth;
-unsigned int line_width;
-unsigned char *last_line;
-unsigned char *current_line;
+static Parameters global_params;
+static float slope;
+static unsigned char color_depth;
+static unsigned int line_width;
+static unsigned char *last_line;
+static unsigned char *current_line;
 
-unsigned char generate_pixel(unsigned char depth, unsigned char top_pixel,
-                             unsigned char left_pixel) {
+static unsigned char generate_pixel(unsigned char depth,
+                                    unsigned char top_pixel,
+                                    unsigned char left_pixel) {
   short k = rand_uchar(global_params.var[depth] + 1);
   short v = (rand_uchar(2) == 0 ? k : -k) + (left_pixel)*slope +
             (top_pixel) * (1.0 - slope);
   return (unsigned char)(v < 0 ? 0 : (v > 255 ? (unsigned char)255 : v));
 }
 
-void generate_line() {
+static void generate_line() {
   unsigned int i;
   for (i = 0; i < line_width; i++) {
     last_line[i] = current_line[i];
@@ -40,8 +41,8 @@ void generate_line() {
   }
 }
 
-void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
-                       unsigned int len) {
+static void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
+                              unsigned int len) {
   unsigned int i;
   unsigned int x;
   if (y % global_params.size == 0) {
@@ -54,7 +55,7 @@ void generate_bmp_line(unsigned short y, unsigned char *data_buffer,
   }
 }
 
-void debug_parameters(Parameters params) {
+static void debug_parameters(Parameters params) {
   if (!params.quiet) {
     printf("  output  %s\n", params.file_path);
     printf("  seed    %ld\n", params.seed);
@@ -75,7 +76,7 @@ void debug_parameters(Parameters params) {
   }
 }
 
-void init(Parameters params) {
+static void init(Parameters params) {
   global_params = params;
   slope = ((float)params.slope) / 255.0;
   color_depth = params.monochrome ? 1 : 3;
@@ -87,22 +88,22 @@ void init(Parameters params) {
   for (i = 0; i < line_width; i++) {
     current_line[i] = params.start[i % color_depth];
   }
-  set_seed(params.seed);
+  rand_seed(params.seed);
 }
 
-void clean() {
+static void clean() {
   free(last_line);
   free(current_line);
 }
 
-void print_time(Parameters params, clock_t start) {
+static void print_time(Parameters params, clock_t start) {
   if (!params.quiet) {
     clock_t now = clock();
     printf("time: %.3fs\n", (float)(now - start) / CLOCKS_PER_SEC);
   }
 }
 
-void generate(Parameters params) {
+void generator_run(Parameters params) {
   if (!params.quiet) {
     puts(PACKAGE " " VERSION);
   }

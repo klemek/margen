@@ -9,7 +9,7 @@
 #include "rand.h"
 #include "types.h"
 
-void print_help(int status_code) {
+static void print_help(int status_code) {
   puts(PACKAGE
        " " VERSION "\n\n"
        "usage: " PACKAGE " "
@@ -48,26 +48,26 @@ void print_help(int status_code) {
   exit(status_code);
 }
 
-void invalid_arg(char *arg) {
+static void invalid_arg(char *arg) {
   fprintf(stderr, "invalid argument: '%s'\n\n", arg);
   print_help(EXIT_FAILURE);
 }
 
-void invalid_value(char *arg, char *value) {
+static void invalid_value(char *arg, char *value) {
   fprintf(stderr, "invalid value for argument '%s': '%s'\n\n", arg, value);
   print_help(EXIT_FAILURE);
 }
 
-bool is_arg(char *arg, char *ref) { return strcoll(arg, ref) == 0; }
+static bool is_arg(char *arg, char *ref) { return strcoll(arg, ref) == 0; }
 
-char *split_arg_value(char *arg) {
+static char *split_arg_value(char *arg) {
   strtok(arg, "=");
   return strtok(NULL, "=");
 }
 
-bool is_digit(char c) { return c >= '0' && c <= '9'; }
+static bool is_digit(char c) { return c >= '0' && c <= '9'; }
 
-bool is_number(char *value) {
+static bool is_number(char *value) {
   if (value == NULL) {
     return false;
   }
@@ -81,7 +81,7 @@ bool is_number(char *value) {
   return true;
 }
 
-unsigned char parse_char(char *arg, char *value) {
+static unsigned char parse_char(char *arg, char *value) {
   if (!is_number(value)) {
     invalid_value(arg, value);
   }
@@ -92,7 +92,7 @@ unsigned char parse_char(char *arg, char *value) {
   return (unsigned char)tmp_value;
 }
 
-unsigned short parse_ushort(char *arg, char *value) {
+static unsigned short parse_ushort(char *arg, char *value) {
   if (!is_number(value)) {
     invalid_value(arg, value);
   }
@@ -103,14 +103,14 @@ unsigned short parse_ushort(char *arg, char *value) {
   return (unsigned short)tmp_value;
 }
 
-unsigned long parse_ulong(char *arg, char *value) {
+static unsigned long parse_ulong(char *arg, char *value) {
   if (!is_number(value)) {
     invalid_value(arg, value);
   }
   return (unsigned long)atoll(value);
 }
 
-void parse_color(char *arg, char *value, unsigned char color[3]) {
+static void parse_color(char *arg, char *value, unsigned char color[3]) {
   char *tmp;
   tmp = strtok(value, ",");
   color[0] = parse_char(arg, tmp);
@@ -120,7 +120,7 @@ void parse_color(char *arg, char *value, unsigned char color[3]) {
   color[2] = parse_char(arg, tmp);
 }
 
-Parameters parse_args(int argc, char **argv) {
+Parameters args_parse(int argc, char **argv) {
   Parameters params;
 
   params.quiet = false;
@@ -203,7 +203,7 @@ Parameters parse_args(int argc, char **argv) {
     params.height = 1080;
   }
 
-  set_seed(params.seed);
+  rand_seed(params.seed);
 
   if (!size_set) {
     params.size = rand_ushort(6) + 6;

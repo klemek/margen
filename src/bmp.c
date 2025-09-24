@@ -6,31 +6,32 @@
 
 #define HEADER_SIZE 54
 
-void write_str(unsigned char *buffer, unsigned int offset, unsigned int size,
-               unsigned char *value) {
+static void write_str(unsigned char *buffer, unsigned int offset,
+                      unsigned int size, unsigned char *value) {
   unsigned int i;
   for (i = 0; i < size; i++) {
     buffer[offset + i] = (unsigned char)value[i];
   }
 }
 
-void write_num(unsigned char *buffer, unsigned int offset, unsigned int size,
-               unsigned int value) {
+static void write_num(unsigned char *buffer, unsigned int offset,
+                      unsigned int size, unsigned int value) {
   unsigned int i;
   for (i = 0; i < size; i++) {
     buffer[offset + i] = (unsigned char)((value >> (8 * i)) & 0xFFu);
   }
 }
 
-void write_nul(unsigned char *buffer, unsigned int offset, unsigned int size) {
+static void write_nul(unsigned char *buffer, unsigned int offset,
+                      unsigned int size) {
   unsigned int i;
   for (i = 0; i < size; i++) {
     buffer[offset + i] = 0;
   }
 }
 
-unsigned char *bmp_header(unsigned short width, unsigned short height,
-                          unsigned char color_depth) {
+static unsigned char *bmp_header(unsigned short width, unsigned short height,
+                                 unsigned char color_depth) {
   unsigned char *output = (unsigned char *)malloc(HEADER_SIZE);
   unsigned int data_length = ((unsigned int)width) * ((unsigned int)height) *
                              ((unsigned int)color_depth);
@@ -68,8 +69,8 @@ unsigned char *bmp_header(unsigned short width, unsigned short height,
   return output;
 }
 
-unsigned int bmp_data_line_length(unsigned short width,
-                                  unsigned char color_depth) {
+static unsigned int bmp_data_line_length(unsigned short width,
+                                         unsigned char color_depth) {
   unsigned int data_length =
       ((unsigned int)width) * ((unsigned int)color_depth);
   unsigned int line_offset = data_length % 4;
@@ -77,8 +78,8 @@ unsigned int bmp_data_line_length(unsigned short width,
   return data_length + line_padding;
 }
 
-void bmp_data_line(unsigned char *buffer, unsigned short width,
-                   unsigned char color_depth, unsigned char *data) {
+static void bmp_data_line(unsigned char *buffer, unsigned short width,
+                          unsigned char color_depth, unsigned char *data) {
   unsigned int data_length =
       ((unsigned int)width) * ((unsigned int)color_depth);
   unsigned int line_offset = data_length % 4;
